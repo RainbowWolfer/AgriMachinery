@@ -34,6 +34,7 @@ td, tr, td {
 
 .right {
     flex-grow: 1;
+    background-color: darkslateblue;
 }
 
 .mytable {
@@ -63,7 +64,7 @@ td, tr, td {
     position: fixed;
     bottom: 0;
     width: 30%;
-    text-align: center;
+    text-align: -webkit-center;
 }
 
 #avatar {
@@ -79,8 +80,49 @@ iframe {
 }
 
 .menuButton {
-    font-size: 30px;
+    font-size: 18px;
     background-color: transparent;
     border-color: transparent;
+    color: lightcyan;
+}
+
+.btmtable {
+    text-align: -webkit-center;
+    margin: 0px 0px 20px 0px;
+}
+
+.btmtable tr td {
+    font-size: 18px;
+    color: lightcyan;
+    text-align: center;
+}
+
+.tractorstable {
+    text-align: -webkit-center;
+    table-layout: fixed;
+    padding: 50px;
+}
+
+.tractorstable th {
+    font-weight: bold;
+    font-size: 20px;
+    border: 1px;
+}
+
+.descriptiontd {
+    word-wrap: break-word;
+}
+
+.descriptiondiv {
+    width: 60vw;
+}
+
+.tractorstable * {
+    color: lightcyan;
+    margin: 5px;
+}
+
+.righttitle {
+    font-size: large;
     color: lightcyan;
 }

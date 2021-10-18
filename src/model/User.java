@@ -16,6 +16,10 @@ public class User {
 		tractors = new ArrayList<Tractor>();
 	}
 	
+	public static User Check(String username, String password) {
+		return null;
+	}
+	
 	
 	public boolean isAdmin() {
 		return isAdmin;
@@ -48,7 +52,7 @@ public class User {
 	}
 	
 	public boolean RemoveTractor(Tractor tractor) {
-		if (!tractors.contains(tractor)) {
+		if(!tractors.contains(tractor)) {
 			return false;
 		}
 		tractors.remove(tractor);

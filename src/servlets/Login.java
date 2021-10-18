@@ -59,6 +59,8 @@ public class Login extends HttpServlet {
 		if (user != null) {
 			resp.addCookie(new Cookie("LastLogin_Username", username));
 			resp.addCookie(new Cookie("LastLogin_Password", password));
+			
+			req.setAttribute("user", user);
 			if (user.isAdmin()) {
 			
 			} else {

@@ -25,9 +25,13 @@
             <tr>
                 <td>
                     <p class="info" style="margin: 30px 0px 0px 0px;">
-                        蔚家旭
+                        当前
                         <%
-                            out.println(user.getUsername());
+                            if (user == null) {
+                                out.println("用户为空");
+                            } else {
+                                out.println(user.isAdmin() ? "管理员：" : "用户：" + user.getUsername());
+                            }
                         %>
                     </p>
                     <p class="info" style="margin: 0px 0px 60px 0px;">

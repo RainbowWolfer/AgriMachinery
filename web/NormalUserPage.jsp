@@ -25,7 +25,7 @@
             <tr>
                 <td>
                     <p class="info" style="margin: 30px 0px 0px 0px;">
-                        蔚家旭
+                        当前用户：
                         <%
                             out.println(user.getUsername());
                         %>

@@ -7,18 +7,16 @@ public class User {
 	private String username;
 	private String password;
 	private boolean isAdmin;
-	private List<Tractor> tractors;
 	
 	public User(String username, String password, boolean isAdmin) {
 		this.username = username;
 		this.password = password;
 		this.isAdmin = isAdmin;
-		tractors = new ArrayList<Tractor>();
 	}
 	
 	public static User Check(String username, String password) {
 		if (username.equals("123") && password.equals("123")) {
-			return new User(username, password, false);
+			return new User(username, password, true);
 		}
 		return null;
 	}
@@ -48,22 +46,6 @@ public class User {
 	public void setUsername(String username) {
 		
 		this.username = username;
-	}
-	
-	public List<Tractor> getTractors() {
-		return tractors;
-	}
-	
-	public boolean RemoveTractor(Tractor tractor) {
-		if (!tractors.contains(tractor)) {
-			return false;
-		}
-		tractors.remove(tractor);
-		return true;
-	}
-	
-	public void AddTractor(Tractor tractor) {
-		tractors.add(tractor);
 	}
 	
 }

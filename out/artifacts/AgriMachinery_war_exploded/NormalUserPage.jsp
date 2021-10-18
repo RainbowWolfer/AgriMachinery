@@ -10,7 +10,6 @@
 <body>
 <%
     User user = (User) request.getAttribute("user");
-
 %>
 <div class="container">
     <div class="left">
@@ -18,19 +17,18 @@
             <tr>
                 <th>
                     <a>
-                        <img id="avatar" id="myimg" src="resources/testicon.png"/>
+                        <img id="avatar" id="myimg"
+                             src="resources/testgif.gif"/>
                     </a>
                 </th>
             </tr>
             <tr>
                 <td>
                     <p class="info" style="margin: 30px 0px 0px 0px;">
-                        当前
+                        当前用户：
                         <%
-                            if (user == null) {
-                                out.println("用户为空");
-                            } else {
-                                out.println(user.isAdmin() ? "管理员：" : "用户：" + user.getUsername());
+                            if(user != null) {
+                                out.println(user.getUsername());
                             }
                         %>
                     </p>

@@ -1,4 +1,4 @@
-package servlets;
+package servlet;
 
 import model.User;
 
@@ -62,7 +62,7 @@ public class Login extends HttpServlet {
 			
 			req.setAttribute("user", user);
 			if (user.isAdmin()) {
-			
+				req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 			} else {
 				req.getRequestDispatcher("NormalUserPage.jsp").forward(req, resp);
 			}

@@ -10,7 +10,6 @@
 <body>
 <%
     User user = (User) request.getAttribute("user");
-
 %>
 <div class="container">
     <div class="left">
@@ -18,7 +17,8 @@
             <tr>
                 <th>
                     <a>
-                        <img id="avatar" id="myimg" src="resources/testicon.png"/>
+                        <img id="avatar" id="myimg"
+                             src="resources/testgif.gif"/>
                     </a>
                 </th>
             </tr>
@@ -27,7 +27,9 @@
                     <p class="info" style="margin: 30px 0px 0px 0px;">
                         当前用户：
                         <%
-                            out.println(user.getUsername());
+                            if(user != null) {
+                                out.println(user.getUsername());
+                            }
                         %>
                     </p>
                     <p class="info" style="margin: 0px 0px 60px 0px;">

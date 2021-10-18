@@ -1,11 +1,17 @@
+<%@ page import="model.User" %>
+<%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <link type="text/css" href="NormalUserPage.css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
     <title>User</title>
 </head>
 <body>
+<%
+    User user = (User) request.getAttribute("user");
+
+%>
 <div class="container">
     <div class="left">
         <table class="mytable">
@@ -20,6 +26,9 @@
                 <td>
                     <p class="info" style="margin: 30px 0px 0px 0px;">
                         蔚家旭
+                        <%
+                            out.println(user.getUsername());
+                        %>
                     </p>
                     <p class="info" style="margin: 0px 0px 60px 0px;">
                         洛阳理工学院 - 农机管理
@@ -28,21 +37,21 @@
             </tr>
             <tr>
                 <td>
-                    <a class="menuitem" href="PersonalPage.html" target="targetframe">
+                    <a class="menuitem" href="" target="targetframe">
                         · 个人信息 ·
                     </a>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <a class="menuitem" href="Schedule.html" target="targetframe">
+                    <a class="menuitem" href="" target="targetframe">
                         · 修改登录信息 ·
                     </a>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <a class="menuitem" href="ExaminationSystem.html" target="targetframe">
+                    <a class="menuitem" href="" target="targetframe">
                         · 注销 ·
                     </a>
                 </td>

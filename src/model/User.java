@@ -17,6 +17,9 @@ public class User {
 	}
 	
 	public static User Check(String username, String password) {
+		if (username.equals("123") && password.equals("123")) {
+			return new User(username, password, false);
+		}
 		return null;
 	}
 	
@@ -52,7 +55,7 @@ public class User {
 	}
 	
 	public boolean RemoveTractor(Tractor tractor) {
-		if(!tractors.contains(tractor)) {
+		if (!tractors.contains(tractor)) {
 			return false;
 		}
 		tractors.remove(tractor);

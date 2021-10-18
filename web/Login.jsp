@@ -3,7 +3,7 @@
 <link type="text/css" href="Login.css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
-    <title>servlets.Login</title>
+    <title>Login</title>
 </head>
 <body>
 <h1>LOGIN PAGE</h1>
@@ -28,6 +28,13 @@
             <input class="LoginButton" type="submit" value="Login"/>
         </div>
     </form>
+</div>
+
+<div>
+    <%
+//        String info = (String) request.getAttribute("info");
+//        out.println(info);
+    %>
 </div>
 </body>
 </html>

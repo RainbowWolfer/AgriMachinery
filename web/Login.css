@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 70px;
+}
+
+.LoginButton {
+    font-size: 40px;
+    height: 70px;
+    width: 200px;
+}
+
+.InnerDiv {
+    text-align: center;
+}
+
+.MyInput {
+    font-size: 30px;
+}
+
+td.MyInput{
+    text-align: right;
+    padding: 10px;
+}

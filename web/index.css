@@ -1,0 +1,15 @@
+h1 {
+    text-align: center;
+    font-size: 70px;
+}
+
+.LoginButton {
+    height: 140px;
+    width: 400px;
+    font-size: 40px;
+}
+
+.LoginDiv {
+    text-align: center;
+    padding: 30vh 0;
+}

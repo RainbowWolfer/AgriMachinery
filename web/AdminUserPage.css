@@ -61,10 +61,12 @@ td, tr, td {
 }
 
 #bottomrigths {
-    position: fixed;
-    bottom: 0;
-    width: 30%;
-    text-align: -webkit-center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 #avatar {
@@ -126,3 +128,4 @@ iframe {
     font-size: large;
     color: lightcyan;
 }
+

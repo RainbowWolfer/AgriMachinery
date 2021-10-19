@@ -38,8 +38,8 @@ public class ChangePassword extends HttpServlet {
 			} else {
 				req.setAttribute("display", "密码修改成功");
 				req.getRequestDispatcher("SimpleDisplayPage.jsp").forward(req, resp);
+				
 			}
-			
 		}
 	}
 }

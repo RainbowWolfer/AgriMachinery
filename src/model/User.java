@@ -15,7 +15,7 @@ public class User {
 	}
 	
 	public static User Check(String username, String password) {
-		if (username.equals("1234") && password.equals("1234")) {
+		if(username.equals("1234") && password.equals("1234")) {
 			return new User(username, password, true);
 		}
 		return null;
@@ -48,4 +48,9 @@ public class User {
 		this.username = username;
 	}
 	
+	
+	@Override
+	public String toString() {
+		return "User: " + username;
+	}
 }

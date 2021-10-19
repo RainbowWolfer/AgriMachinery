@@ -20,14 +20,14 @@ public class MyDataBase {
 		users = new ArrayList<User>();
 		tractors = new ArrayList<Tractor>();
 		
-		for(int i = 0; i < new Random().nextInt(20); i++) {
+		for(int i = 0; i < new Random().nextInt(20) + 5; i++) {
 			users.add(new User(
 					Methods.GetRandomString(5),
 					Methods.GetRandomString(10),
 					new Random().nextInt(2) == 1));
 		}
 		
-		for(int i = 0; i < new Random().nextInt(20); i++) {
+		for(int i = 0; i < new Random().nextInt(20) + 5; i++) {
 			tractors.add(new Tractor(Methods.GetRandomString(5), Methods.GetRandomString(200), new Random().nextInt(5000)));
 		}
 	}
@@ -38,5 +38,32 @@ public class MyDataBase {
 	
 	public static List<User> GetAllUsers() {
 		return users;
+	}
+	
+	public static User FindUser(String username) {
+		for(var u : users) {
+			if(u.getUsername().equals(username)) {
+				return u;
+			}
+		}
+		return null;
+	}
+	
+	public static boolean RemoveUser(User user) {
+		return users.remove(user);
+	}
+	
+	public static boolean AddUser(User user) {
+		//detect whether there is a duplicate username
+		users.add(user);
+		return true;
+	}
+	
+	public static boolean ModifyUser(User oldOne, User newOne) {
+		if(!users.contains(oldOne)) {
+			return false;
+		}
+		users.set(users.indexOf(oldOne), newOne);
+		return true;
 	}
 }

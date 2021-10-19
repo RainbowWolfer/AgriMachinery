@@ -18,7 +18,7 @@ public class UserPage extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		User user = (User) req.getSession().getAttribute("user");
+		User user = (User) req.getSession().getAttribute("user");//it should be right after login
 		resp.getWriter().println(user == null ? "_!yes" : "_!no");
 		req.getRequestDispatcher("ChangePasswordPage.jsp").forward(req, resp);
 	}

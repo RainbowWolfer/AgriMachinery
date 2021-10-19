@@ -73,47 +73,52 @@
 		<form class="addButtonForm" action="addnew" method="get">
 			<input class="addButton" type="submit" value="添加新用户"/>
 		</form>
-		<table class="tractorstable">
-			<tr>
-				<th class="nametd">姓名</th>
-				<th class="descriptiondtd">密码</th>
-				<th class="pricetd">是否为管理员</th>
-				<th class="oprationtd">操作</th>
-			</tr>
-			<%
-				for(User u : list_users) {
-			%>
-			<tr>
-				<td class="nametd">
-					<%=u.getUsername()%>
-				</td>
-				<td class="descriptiondtd">
-					<%=u.getPassword()%>
-				</td>
-				<td class="pricetd">
-					<%=u.isAdmin()%>
-				</td>
-				<th class="oprationtd">
-					<form style="margin: 0" action="delete" method="get"
-					      onsubmit="return confirm('确认删除用户：'.concat('<%=u.getUsername()%>'));">
-						<input class="oprationButton" type="submit" value="删除"/>
-					</form>
-					<form name="modifyForm" style="margin: 0">
-						<input class="oprationButton" type="button" value="修改"
+		<div class="div_table">
+			<table class="tractorstable">
+				<tr>
+					<th class="nametd">姓名</th>
+					<th class="descriptiondtd">密码</th>
+					<th class="pricetd">是否为管理员</th>
+					<th class="oprationtd">操作</th>
+				</tr>
+				<%
+					for(User u : list_users) {
+				%>
+				<tr>
+					<td class="nametd">
+						<p>
+							<%=u.getUsername()%>
+						</p>
+					</td>
+					<td class="descriptiondtd">
+						<p>
+							<%=u.getPassword()%>
+						</p>
+					</td>
+					<td class="pricetd">
+						<p>
+							<%=u.isAdmin()%>
+						</p>
+					</td>
+					<td class="oprationtd">
+						<form action="modify" method="post">
+							<input name="ObjectInput" type="hidden"
+							       value="<%=u.getUsername()%>"/>
+							<input class="oprationButton" type="submit"
+							       value="删除"/>
+						</form>
+						<input class="oprationButton" type="button"
+						       value="修改"
 						       onclick="{
-								       alert('HelloWorld2');
-								       sessionStorage.setItem('modify_target', '<%=u%>');
-								       alert('step1');
-								       document.modifyForm.action = 'modify';
-								       alert('step2');
-								       document.modifyForm.submit();
-								       alert('step3');
+								       location.href='ModifyUser.jsp?username=\'+<%=u.getUsername()%>';
 								       }"/>
-					</form>
-				</th>
-			</tr>
-			<% } %>
-		</table>
+					</td>
+				</tr>
+				<%
+					}
+				%>
+			</table>
+		</div>
 	</div>
 	<script>
         function Modify(object) {

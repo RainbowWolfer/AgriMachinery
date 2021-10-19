@@ -38,16 +38,16 @@
             <table class="btmtable">
                 <tr>
                     <td>
-                        <form>
+                        <form action="userpage" method="post">
                             <input class="menuButton" type="submit"
-                                   value="修改登录信息"/>
+                                   value="修改登录信息" />
                         </form>
                     </td>
                     <td>
                         ·
                     <td/>
                     <td>
-                        <form>
+                        <form action="userpage" method="get">
                             <input class="menuButton" type="submit" value="注销"/>
                         </form>
                     </td>
@@ -72,7 +72,7 @@
                 <th>价格</th>
             </tr>
             <%
-                for(Tractor t : list) {
+                for (Tractor t : list) {
             %>
             <tr>
                 <td>

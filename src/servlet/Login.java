@@ -20,31 +20,32 @@ public class Login extends HttpServlet {
 		String info = "";
 		var cookies = req.getCookies();
 		User found = null;
-		if(cookies != null) {
+		if (cookies != null) {
 			String username = "";
 			String password = "";
-			for(var c : cookies) {
-				if(c.getName().equals("LastLogin_Username")) {
+			for (var c : cookies) {
+				if (c.getName().equals("LastLogin_Username")) {
 					username = c.getValue();
-				} else if(c.getName().equals("LastLogin_Password")) {
+				} else if (c.getName().equals("LastLogin_Password")) {
 					password = c.getValue();
 				}
-				if(!username.equals("") && !password.equals("")) {
+				if (!username.equals("") && !password.equals("")) {
 					break;
 				}
 			}
-			if(!username.equals("") && !password.equals("")) {
+			if (!username.equals("") && !password.equals("")) {
 				found = User.Check(username, password);
 			}
 		}
 		info = String.valueOf(cookies == null);
 		var out = resp.getWriter();
-		if(found == null) {
+		if (found == null) {
 			req.getRequestDispatcher("Login.jsp").forward(req, resp);
 		} else {
 			req.setAttribute("info", info);
 			req.setAttribute("user", found);
-			if(found.isAdmin()) {
+			req.getSession().setAttribute("user", found);
+			if (found.isAdmin()) {
 				req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 			} else {
 				req.getRequestDispatcher("NormalUserPage.jsp").forward(req, resp);
@@ -60,12 +61,13 @@ public class Login extends HttpServlet {
 		String password = req.getParameter("PasswordInput");
 		
 		var user = User.Check(username, password);
-		if(user != null) {
+		if (user != null) {
 			resp.addCookie(new Cookie("LastLogin_Username", username));
 			resp.addCookie(new Cookie("LastLogin_Password", password));
 			
 			req.setAttribute("user", user);
-			if(user.isAdmin()) {
+			req.getSession().setAttribute("user", user);
+			if (user.isAdmin()) {
 				req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 			} else {
 				req.getRequestDispatcher("NormalUserPage.jsp").forward(req, resp);

@@ -5,7 +5,7 @@ import java.util.Random;
 public final class Methods {
 	public static String GetRandomString(int length) {
 		Random random = new Random();
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < length; i++) {
 			int number = random.nextInt(3);
 			long result = 0;
@@ -22,8 +22,6 @@ public final class Methods {
 					sb.append(new Random().nextInt(10));
 					break;
 			}
-			
-			
 		}
 		return sb.toString();
 	}

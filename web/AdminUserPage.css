@@ -116,6 +116,14 @@ body {
     text-align: center;
 }
 
+.usersDIV {
+    display: none;
+}
+
+.tractorsDIV {
+    display: initial;
+}
+
 /** {*/
 /*    padding: 0px;*/
 /*    margin: 0px;*/

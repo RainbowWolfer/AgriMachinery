@@ -15,13 +15,20 @@ public class MyDataBase {
 	
 	public static List<Tractor> GetAllTractors() {
 		List<Tractor> result = new ArrayList<>();
-		for(int i = 0; i < new Random().nextInt(20); i++) {
+		for (int i = 0; i < new Random().nextInt(20); i++) {
 			result.add(new Tractor(Methods.GetRandomString(5), Methods.GetRandomString(200), new Random().nextInt(5000)));
 		}
 		return result;
 	}
 	
 	public static List<User> GetAllUsers() {
-		return null;
+		List<User> result = new ArrayList<>();
+		for (int i = 0; i < new Random().nextInt(20); i++) {
+			result.add(new User(
+					Methods.GetRandomString(5),
+					Methods.GetRandomString(10),
+					new Random().nextInt(2) == 1));
+		}
+		return result;
 	}
 }

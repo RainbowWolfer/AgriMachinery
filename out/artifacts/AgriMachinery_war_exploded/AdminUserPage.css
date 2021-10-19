@@ -70,7 +70,7 @@ body {
 .righttitle {
     text-align: center;
     color: lightcyan;
-    font-size: xx-large;
+    font-size: x-large;
 }
 
 .tractorstable {
@@ -93,7 +93,7 @@ body {
 }
 
 .descriptiondtd {
-    width: 60%;
+    width: 50%;
     font-size: x-large;
     text-align: center;
 }
@@ -116,12 +116,31 @@ body {
     text-align: center;
 }
 
+.oprationtd {
+    width: 10%;
+    font-size: x-large;
+    text-align: center;
+}
+
 .usersDIV {
     display: none;
 }
 
 .tractorsDIV {
     display: initial;
+}
+
+.oprationButton {
+    background-color: cadetblue;
+    font-size: 18px;
+}
+
+.addButtonForm {
+    text-align: center;
+}
+
+.addButton {
+    font-size: 18px;
 }
 
 /** {*/

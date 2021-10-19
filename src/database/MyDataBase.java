@@ -13,22 +13,30 @@ public class MyDataBase {
 		throw new Exception("This class cannot be serialized");
 	}
 	
-	public static List<Tractor> GetAllTractors() {
-		List<Tractor> result = new ArrayList<>();
-		for (int i = 0; i < new Random().nextInt(20); i++) {
-			result.add(new Tractor(Methods.GetRandomString(5), Methods.GetRandomString(200), new Random().nextInt(5000)));
-		}
-		return result;
-	}
+	private static List<User> users;
+	private static List<Tractor> tractors;
 	
-	public static List<User> GetAllUsers() {
-		List<User> result = new ArrayList<>();
-		for (int i = 0; i < new Random().nextInt(20); i++) {
-			result.add(new User(
+	static {
+		users = new ArrayList<User>();
+		tractors = new ArrayList<Tractor>();
+		
+		for(int i = 0; i < new Random().nextInt(20); i++) {
+			users.add(new User(
 					Methods.GetRandomString(5),
 					Methods.GetRandomString(10),
 					new Random().nextInt(2) == 1));
 		}
-		return result;
+		
+		for(int i = 0; i < new Random().nextInt(20); i++) {
+			tractors.add(new Tractor(Methods.GetRandomString(5), Methods.GetRandomString(200), new Random().nextInt(5000)));
+		}
+	}
+	
+	public static List<Tractor> GetAllTractors() {
+		return tractors;
+	}
+	
+	public static List<User> GetAllUsers() {
+		return users;
 	}
 }

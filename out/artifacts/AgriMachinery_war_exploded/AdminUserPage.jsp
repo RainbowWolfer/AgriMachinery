@@ -5,13 +5,22 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html lang="en">
 <link type="text/css" href="AdminUserPage.css" rel="stylesheet">
-<head>
-	<title>Admin</title>
-</head>
 <%
 	User user = (User) request.getAttribute("user");
+	String entrace_alert = (String) request.getAttribute("entrace_alert");
+	entrace_alert = entrace_alert == null ? "" : entrace_alert;
+
 %>
+<head>
+	<title>Admin</title>
+	<script>
+        if ('<%=entrace_alert%>'.length !== 0) {
+            alert('<%=entrace_alert%>');
+        }
+	</script>
+</head>
 <body>
+
 <div class="left">
 	<div>
 		<table class="infotable">
@@ -101,24 +110,19 @@
 						</p>
 					</td>
 					<td class="oprationtd">
-						<form action="modify" method="post">
-							<label>
-								<input
-										name="ObjectInput" type="hidden"
-										value="<%=u.getUsername()%>"/>
-							</label>
-							<input class="oprationButton"
-							       type="submit"
+						<form action="delete" method="get"
+						      onsubmit="return confirm('确认删除用户'.concat('<%=u.getUsername()%>'))">
+							<input name="ObjectInput" type="hidden"
+							       value="<%=u.getUsername()%>"/>
+							<input class="oprationButton" type="submit"
 							       value="删除"/>
-							<!-- onclick="{
-									       location.href='DeletePage.jsp?username=\'+<%=u.getUsername()%>';
-									       }"-->
 						</form>
-						<input class="oprationButton" type="button"
-						       value="修改"
-						       onclick="{
-								       location.href='ModifyUser.jsp?username=\'+<%=u.getUsername()%>';
-								       }"/>
+						<form action="modify" method="get">
+							<input name="ObjectInput" type="hidden"
+							       value="<%=u.getUsername()%>"/>
+							<input class="oprationButton" type="submit"
+							       value="修改"/>
+						</form>
 					</td>
 				</tr>
 				<%

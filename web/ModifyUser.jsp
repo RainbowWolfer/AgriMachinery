@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <%
-	User user = (User) request.getAttribute("user");
+	User user = (User) request.getAttribute("modify_target");
 %>
 <link rel="stylesheet" type="text/css" href="ModifyUser.css"/>
 <head>

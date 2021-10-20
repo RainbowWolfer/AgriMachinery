@@ -18,26 +18,14 @@ public class ModifyUserOrTractor extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		User user = (User) req.getSession().getAttribute("modify_target");
-		String info = (String) req.getSession().getAttribute("deleteORmodify");
-		
-		if(user == null) {
-			resp.getWriter().println("what");
-			resp.getWriter().println(req.getSession().getAttribute("modify_target"));
-			resp.getWriter().println(req.getSession().getAttribute("deleteORmodify"));
-			resp.getWriter().println("what????");
-			for(String v : Collections.list(req.getSession().getAttributeNames())) {
-				resp.getWriter().println(v);
-			}
+		String username = req.getParameter("ObjectInput");
+		User u = MyDataBase.FindUser(username);
+		if(u != null) {
+			req.setAttribute("modify_target", u);
+			req.getRequestDispatcher("ModifyUser.jsp").forward(req, resp);
 		} else {
-			if(info.equals("delete")) {
-				MyDataBase.RemoveUser(user);
-				req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
-			} else if(info.equals("modify")) {
-				req.getRequestDispatcher("ModifyUser.jsp").forward(req, resp);
-			} else {
-				resp.getWriter().println("wtf2");
-			}
+			req.setAttribute("entrace_alert", "找不到用户");
+			req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 		}
 	}
 	

@@ -1,6 +1,7 @@
 package servlet;
 
 import database.MyDataBase;
+import model.Tractor;
 import model.User;
 
 import javax.servlet.ServletException;
@@ -33,6 +34,14 @@ public class DeleteUserOrTractor extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String name = req.getParameter("ObjectInput");
+		Tractor t = MyDataBase.FindTractor(name);
+		if(t != null) {
+			MyDataBase.RemoveTractor(t);
+			req.setAttribute("entrace_alert", "成功删除农机");
+		} else {
+			req.setAttribute("entrace_alert", "删除农机失败");
+		}
 		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 	}
 }

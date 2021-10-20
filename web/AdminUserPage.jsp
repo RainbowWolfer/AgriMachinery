@@ -10,6 +10,8 @@
 	String entrace_alert = (String) request.getAttribute("entrace_alert");
 	entrace_alert = entrace_alert == null ? "" : entrace_alert;
 
+	//prevent refreshing show the same message (but it does not seem to work correctly)
+	request.setAttribute("entrace_alert", "");
 %>
 <head>
 	<title>Admin</title>
@@ -20,7 +22,6 @@
 	</script>
 </head>
 <body>
-
 <div class="left">
 	<div>
 		<table class="infotable">
@@ -32,22 +33,24 @@
 			</tr>
 			<tr>
 				<td class="infotd">
-					当前管理员：<%--<%=user.getUsername()%>--%>
+					当前管理员：<%=user == null ? "" : user.getUsername()%>
 				</td>
 			</tr>
 			<tr>
-				<td class="infotd">
+				<td class="infotd" style="padding: 0 0 40px 0">
 					洛阳理工学院 - 农机管理
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<input type="button" value="所有用户" onclick="ShowUsers()"/>
+					<input class="showPageButton" type="button" value="查看所有用户"
+					       onclick="ShowUsers()"/>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<input type="button" value="所有农机" onclick="ShowTractors()"/>
+					<input class="showPageButton" type="button" value="查看所有农机"
+					       onclick="ShowTractors()"/>
 				</td>
 			</tr>
 		</table>
@@ -110,14 +113,14 @@
 						</p>
 					</td>
 					<td class="oprationtd">
-						<form action="delete" method="get"
+						<form style="margin: 0" action="delete" method="get"
 						      onsubmit="return confirm('确认删除用户'.concat('<%=u.getUsername()%>'))">
 							<input name="ObjectInput" type="hidden"
 							       value="<%=u.getUsername()%>"/>
 							<input class="oprationButton" type="submit"
 							       value="删除"/>
 						</form>
-						<form action="modify" method="get">
+						<form style="margin: 0" action="modify" method="get">
 							<input name="ObjectInput" type="hidden"
 							       value="<%=u.getUsername()%>"/>
 							<input class="oprationButton" type="submit"
@@ -131,11 +134,6 @@
 			</table>
 		</div>
 	</div>
-	<script>
-        function Modify(object) {
-
-        }
-	</script>
 	<div class="tractorsDIV" id="_tractorsdiv">
 		<%
 			List<Tractor> list_tractors = MyDataBase.GetAllTractors();
@@ -146,37 +144,46 @@
 		<form class="addButtonForm" action="addnew" method="post">
 			<input class="addButton" type="submit" value="添加新农机"/>
 		</form>
-		<table class="tractorstable">
-			<tr>
-				<th class="nametd">名称</th>
-				<th class="descriptiondtd">描述</th>
-				<th class="pricetd">价格</th>
-				<th class="oprationtd">操作</th>
-			</tr>
-			<%
-				for(Tractor t : list_tractors) {
-			%>
-			<tr>
-				<td class="nametd">
-					<%=t.getName()%>
-				</td>
-				<td class="descriptiondtd" id="descriptioncontent">
-					<%=t.getDescription()%>
-				</td>
-				<td class="pricetd">
-					<%=t.getPrice()%>
-				</td>
-				<td class="oprationtd">
-					<form style="margin: 0">
-						<input class="oprationButton" type="submit" value="删除"/>
-					</form>
-					<form style="margin: 0" action="modify" method="post">
-						<input class="oprationButton" type="submit" value="修改"/>
-					</form>
-				</td>
-			</tr>
-			<% } %>
-		</table>
+		<div class="div_table">
+			<table class="tractorstable">
+				<tr>
+					<th class="nametd">名称</th>
+					<th class="descriptiondtd">描述</th>
+					<th class="pricetd">价格</th>
+					<th class="oprationtd">操作</th>
+				</tr>
+				<%
+					for(Tractor t : list_tractors) {
+				%>
+				<tr>
+					<td class="nametd">
+						<%=t.getName()%>
+					</td>
+					<td class="descriptiondtd" id="descriptioncontent">
+						<%=t.getDescription()%>
+					</td>
+					<td class="pricetd">
+						<%=t.getPrice()%>
+					</td>
+					<td class="oprationtd">
+						<form style="margin: 0" action="delete" method="post"
+						      onsubmit="return confirm('确认删除农机'.concat('<%=t.getName()%>'))">
+							<input name="ObjectInput" type="hidden"
+							       value="<%=t.getName()%>"/>
+							<input class="oprationButton" type="submit"
+							       value="删除"/>
+						</form>
+						<form style="margin: 0" action="modify" method="post">
+							<input name="ObjectInput" type="hidden"
+							       value="<%=t.getName()%>"/>
+							<input class="oprationButton" type="submit"
+							       value="修改"/>
+						</form>
+					</td>
+				</tr>
+				<% } %>
+			</table>
+		</div>
 	</div>
 	<script>
         function ShowUsers() {
@@ -190,6 +197,14 @@
             document.getElementById("_usersdiv").style.display = "none";
             sessionStorage.setItem('key_page', 'tractor');
         }
+
+        let _page = sessionStorage.getItem('key_page');
+        if (_page === 'user') {
+            ShowUsers();
+        } else if (_page === 'tractor') {
+            ShowTractors();
+        }
+
 	</script>
 </div>
 </body>

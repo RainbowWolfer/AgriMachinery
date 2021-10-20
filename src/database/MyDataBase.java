@@ -36,6 +36,34 @@ public class MyDataBase {
 		return tractors;
 	}
 	
+	public static Tractor FindTractor(String name) {
+		for(var t : tractors) {
+			if(t.getName().equals(name)) {
+				return t;
+			}
+		}
+		return null;
+	}
+	
+	public static boolean RemoveTractor(Tractor tractor) {
+		return tractors.remove(tractor);
+	}
+	
+	public static boolean AddTractor(Tractor tractor) {
+		//detect whether there is a duplicate name
+		tractors.add(tractor);
+		return true;
+	}
+	
+	public static boolean ModifyTractor(Tractor oldOne, Tractor newOne) {
+		if(!tractors.contains(oldOne)) {
+			return false;
+		}
+		tractors.set(tractors.indexOf(oldOne), newOne);
+		return true;
+	}
+	
+	
 	public static List<User> GetAllUsers() {
 		return users;
 	}
@@ -66,4 +94,6 @@ public class MyDataBase {
 		users.set(users.indexOf(oldOne), newOne);
 		return true;
 	}
+	
+	
 }

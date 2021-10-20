@@ -81,7 +81,8 @@ body {
 }
 
 .div_table {
-
+    overflow-y: scroll;
+    height: 80%;
 }
 
 .tractorstable * {
@@ -128,6 +129,7 @@ body {
 
 .usersDIV {
     display: none;
+    position: relative;
 }
 
 .tractorsDIV {
@@ -139,12 +141,39 @@ body {
     font-size: 18px;
 }
 
+.oprationButton:hover {
+    cursor: pointer;
+}
+
 .addButtonForm {
     text-align: center;
 }
 
 .addButton {
     font-size: 18px;
+    background-color: cadetblue;
+    color: lightcyan;
+}
+
+.addButton:hover {
+    cursor: pointer;
+}
+
+.oprationform {
+    margin: 0;
+}
+
+.showPageButton {
+    background-color: transparent;
+    color: lightcyan;
+    font-size: 24px;
+    outline: aqua;
+    border: 2px;
+}
+
+.showPageButton:hover {
+    cursor: pointer;
+    color: aqua;
 }
 
 /** {*/

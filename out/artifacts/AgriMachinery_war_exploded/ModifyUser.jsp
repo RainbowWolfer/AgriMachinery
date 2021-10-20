@@ -15,30 +15,32 @@
 	<h1>
 		<%=user == null ? "添加新用户" : "修改用户：" + user.getUsername()%>
 	</h1>
-	<form onsubmit="return confirm('确认提交');">
+	<form action="submitmodify" method="get" onsubmit="return confirm('确认提交');">
 		<table>
 			<tr>
 				<th>用户名：</th>
 				<td>
-					<input type="text"
-					       value=<%=user == null ? "" : user.getUsername()%>>
+					<input name="usernameInput" type="text"
+					       value='<%=user == null ? "" : user.getUsername()%>'/>
 				</td>
 			</tr>
 			<tr>
 				<th>密码：</th>
 				<td>
-					<input type="text"
-					       value=<%=user == null ? "" : user.getPassword()%>>
+					<input name="passwordInput" type="text"
+					       value='<%=user == null ? "" : user.getPassword()%>'/>
 				</td>
 			</tr>
 			<tr>
 				<th>管理员：</th>
 				<td>
-					<input type="checkbox"
-					       value=<%=user != null && user.isAdmin()%>>
+					<input name="adminInput"
+					       type="checkbox" <%=user != null && user.isAdmin() ? "checked" : ""%>/>
 				</td>
 			</tr>
 		</table>
+		<input name="originalName" type="hidden"
+		       value='<%=user != null ? user.getUsername() : null%>'/>
 		<input type="submit" value="确认"/>
 	</form>
 </div>

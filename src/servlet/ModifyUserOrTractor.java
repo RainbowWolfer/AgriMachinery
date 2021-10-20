@@ -1,6 +1,7 @@
 package servlet;
 
 import database.MyDataBase;
+import model.Tractor;
 import model.User;
 
 import javax.servlet.ServletException;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
 
 @WebServlet("/modify")
 public class ModifyUserOrTractor extends HttpServlet {
@@ -34,10 +34,15 @@ public class ModifyUserOrTractor extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		req.getRequestDispatcher("Login.jsp").forward(req, resp);
-		String username = req.getParameter("ObjectInput");
-		resp.getWriter().println(username);
+		String name = req.getParameter("ObjectInput");
+		Tractor t = MyDataBase.FindTractor(name);
 		
-		MyDataBase.FindUser(username);
+		if(t != null) {
+			req.setAttribute("modify_target", t);
+			req.getRequestDispatcher("ModifyTractor.jsp").forward(req, resp);
+		} else {
+			req.setAttribute("entrace_alert", "找不到农机");
+			req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
+		}
 	}
 }

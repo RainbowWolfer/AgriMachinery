@@ -1,15 +1,28 @@
 h1 {
     text-align: center;
     font-size: 70px;
+    color: lightcyan;
 }
 
 .LoginButton {
     height: 140px;
     width: 400px;
     font-size: 40px;
+    border: 1px solid;
+    padding: 5px;
+    box-shadow: 5px 5px black;
 }
+
+.LoginButton:hover {
+    box-shadow: 0 0 black;
+}
+
 
 .LoginDiv {
     text-align: center;
     padding: 30vh 0;
+}
+
+body {
+    background-image: linear-gradient(mediumslateblue, slateblue, darkslateblue);
 }

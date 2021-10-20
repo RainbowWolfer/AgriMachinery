@@ -17,6 +17,8 @@ public class User {
 	public static User Check(String username, String password) {
 		if(username.equals("1234") && password.equals("1234")) {
 			return new User(username, password, true);
+		} else if(username.equals("123") && password.equals("123")) {
+			return new User(username, password, false);
 		}
 		return null;
 	}

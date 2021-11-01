@@ -1,9 +1,11 @@
 <%@ page import="model.Tractor" %>
+<%@ page import="database.MyDataBase" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <link rel="stylesheet" type="text/css" href="ModifyUser.css"/>
 <%
 	Tractor tractor = (Tractor) request.getAttribute("modify_target");
+	int id = MyDataBase.GetTractorID(tractor);
 %>
 <head>
 	<title>
@@ -19,6 +21,12 @@
 	      onsubmit="return confirm('确认提交');">
 		<table>
 			<tr>
+				<th>编号：</th>
+				<td>
+					<%=id%>
+				</td>
+			</tr>
+			<tr>
 				<th>名称：</th>
 				<td>
 					<input name="nameInput" type="text"
@@ -28,8 +36,17 @@
 			<tr>
 				<th>描述：</th>
 				<td>
-					<input name="descriptionInput" type="text"
-					       value='<%=tractor == null ? "" : tractor.getDescription()%>'/>
+					<textarea name="descriptionInput" placeholder='<%=tractor == null ? "" : tractor.getDescription()%>' style="height: 100px"></textarea>
+					<%--<input name="descriptionInput" style="height: 100px;"
+					       type="text"
+					       value='<%=tractor == null ? "" : tractor.getDescription()%>'/>--%>
+				</td>
+			</tr>
+			<tr>
+				<th>马力：</th>
+				<td>
+					<input name="powerInput" type="number"
+					       value='<%=tractor == null ? "" : tractor.getPower()%>'/>
 				</td>
 			</tr>
 			<tr>

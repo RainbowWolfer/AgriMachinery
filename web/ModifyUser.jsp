@@ -1,8 +1,10 @@
 <%@ page import="model.User" %>
+<%@ page import="database.MyDataBase" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <%
 	User user = (User) request.getAttribute("modify_target");
+	int id = MyDataBase.GetUserID(user);
 %>
 <link rel="stylesheet" type="text/css" href="ModifyUser.css"/>
 <head>
@@ -18,6 +20,12 @@
 	<form action="submitmodify" method="get" onsubmit="return confirm('确认提交');">
 		<table>
 			<tr>
+				<th>编号：</th>
+				<td>
+					<%=id%>
+				</td>
+			</tr>
+			<tr>
 				<th>用户名：</th>
 				<td>
 					<input name="usernameInput" type="text"
@@ -29,6 +37,20 @@
 				<td>
 					<input name="passwordInput" type="text"
 					       value='<%=user == null ? "" : user.getPassword()%>'/>
+				</td>
+			</tr>
+			<tr>
+				<th>电话：</th>
+				<td>
+					<input name="phoneInput" type="text"
+					       value='<%=user == null ? "" : user.getPhone()%>'/>
+				</td>
+			</tr>
+			<tr>
+				<th>地址：</th>
+				<td>
+					<input name="placeInput" type="text"
+					       value='<%=user == null ? "" : user.getPlace()%>'/>
 				</td>
 			</tr>
 			<tr>

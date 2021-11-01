@@ -13,11 +13,18 @@ import java.io.IOException;
 
 @WebServlet("/checkUserInfo")
 public class CheckUserInfo extends HttpServlet {
+	//进入
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String id = req.getParameter("ObjectInput");
 		User u = MyDataBase.FindUser(Integer.parseInt(id));
 		req.setAttribute("check_user", u);
+		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
+	}
+	
+	//退出
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 	}
 }

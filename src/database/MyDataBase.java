@@ -20,7 +20,7 @@ public class MyDataBase {
 		tractors = new ArrayList<Tractor>();
 		users = new ArrayList<User>();
 		
-		for (int i = 0; i < new Random().nextInt(20) + 5; i++) {
+		for(int i = 0; i < new Random().nextInt(20) + 5; i++) {
 			tractors.add(new Tractor(
 					tractors.size() + 1,
 					Methods.GetRandomString(5),
@@ -29,7 +29,7 @@ public class MyDataBase {
 					new Random().nextInt(5000)));
 		}
 		
-		for (int i = 0; i < new Random().nextInt(20) + 5; i++) {
+		for(int i = 0; i < new Random().nextInt(20) + 5; i++) {
 			users.add(new User(
 					users.size() + 1,
 					Methods.GetRandomString(5),
@@ -42,14 +42,14 @@ public class MyDataBase {
 	}
 	
 	public static List<Tractor> GetRandomTractors(int maxSize) {
-		List<Tractor> tractors = new ArrayList<Tractor>();
-		for (int i = 0; i < maxSize; i++) {
+		List<Tractor> result = new ArrayList<Tractor>();
+		for(int i = 0; i < maxSize; i++) {
 			Tractor found = tractors.get(new Random().nextInt(tractors.size()));
-			if (!tractors.contains(found)) {
-				tractors.add(found);
+			if(!result.contains(found)) {
+				result.add(found);
 			}
 		}
-		return tractors;
+		return result;
 	}
 	
 	public static List<Tractor> GetAllTractors() {
@@ -57,8 +57,8 @@ public class MyDataBase {
 	}
 	
 	public static Tractor FindTractor(String name) {
-		for (var t : tractors) {
-			if (t.getName().equals(name)) {
+		for(var t : tractors) {
+			if(t.getName().equals(name)) {
 				return t;
 			}
 		}
@@ -68,6 +68,11 @@ public class MyDataBase {
 	
 	public static Tractor FindTractor(int id) {
 		return tractors.stream().filter(t -> t.getId() == id).findAny().orElse(null);
+	}
+	
+	public static int GetTractorID(Tractor tractor) {
+		Tractor found = tractors.stream().filter(t -> t.equals(tractor)).findAny().orElse(null);
+		return found == null ? tractors.size() + 1 : found.getId();
 	}
 	
 	public static boolean RemoveTractor(Tractor tractor) {
@@ -81,7 +86,7 @@ public class MyDataBase {
 	
 	public static boolean ModifyTractor(int oldID, String new_name, String new_description, int new_power, int new_price) {
 		Tractor found = tractors.stream().filter(t -> t.getId() == oldID).findAny().orElse(null);
-		if (found == null) {
+		if(found == null) {
 			return false;
 		}
 		tractors.set(tractors.indexOf(found), new Tractor(tractors.size() + 1, new_name, new_description, new_power, new_price));
@@ -94,8 +99,8 @@ public class MyDataBase {
 	}
 	
 	public static User FindUser(String username) {
-		for (var u : users) {
-			if (u.getUsername().equals(username)) {
+		for(var u : users) {
+			if(u.getUsername().equals(username)) {
 				return u;
 			}
 		}
@@ -104,6 +109,11 @@ public class MyDataBase {
 	
 	public static User FindUser(int id) {
 		return users.stream().filter(u -> u.getId() == id).findAny().orElse(null);
+	}
+	
+	public static int GetUserID(User user) {
+		User found = users.stream().filter(u -> u.equals(user)).findAny().orElse(null);
+		return found == null ? users.size() + 1 : found.getId();
 	}
 	
 	public static boolean RemoveUser(User user) {
@@ -117,7 +127,7 @@ public class MyDataBase {
 	
 	public static boolean ModifyUser(int oldID, String new_username, String new_password, String new_phone, String new_place, boolean new_isAdmin) {
 		User found = users.stream().filter(c -> c.getId() == oldID).findAny().orElse(null);
-		if (found == null) {
+		if(found == null) {
 			return false;
 		}
 		users.set(users.indexOf(found), new User(found.getId(), new_username, new_password, new_phone, new_place, new_isAdmin));

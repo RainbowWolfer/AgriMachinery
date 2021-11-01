@@ -17,7 +17,7 @@
 	User check_user = (User) request.getAttribute("check_user");
 
 	PageType type = PageType.Normal;
-	if (check_user != null) {
+	if(check_user != null) {
 		type = PageType.CheckUser;
 	}
 %>
@@ -49,18 +49,36 @@
 					洛阳理工学院 - 农机管理
 				</td>
 			</tr>
+			<%
+				if(type == PageType.Normal) {
+			%>
 			<tr>
 				<td>
-					<input class="showPageButton" type="button" value="查看所有用户"
+					<input class="showPageButton" id="showAllUsersButton"
+					       type="button" value="查看所有用户"
 					       onclick="ShowUsers()"/>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<input class="showPageButton" type="button" value="查看所有农机"
+					<input class="showPageButton" id="showAllTractorsButton"
+					       type="button" value="· 查看所有农机 ·"
 					       onclick="ShowTractors()"/>
 				</td>
 			</tr>
+			<%
+			} else if(type == PageType.CheckUser) {
+			%>
+			<tr>
+				<td>
+					<form action="checkUserInfo" method="post">
+						<input class="showPageButton" type="submit" value="返回"/>
+					</form>
+				</td>
+			</tr>
+			<%
+				}
+			%>
 		</table>
 	</div>
 	<div class="btm">
@@ -84,7 +102,7 @@
 </div>
 <div class="right">
 	<%
-		if (type == PageType.Normal) {
+		if(type == PageType.Normal) {
 	%>
 	<div class="usersDIV" id="_usersdiv">
 		<%
@@ -105,7 +123,7 @@
 					<th class="oprationtd">操作</th>
 				</tr>
 				<%
-					for (User u : list_users) {
+					for(User u : list_users) {
 				%>
 				<tr>
 					<td class="nametd">
@@ -137,7 +155,8 @@
 							<input class="oprationButton" type="submit"
 							       value="修改"/>
 						</form>
-						<form style="margin: 0" action="checkUserInfo" method="get">
+						<form style="margin: 0" action="checkUserInfo"
+						      method="get">
 							<input name="ObjectInput" type="hidden"
 							       value="<%=u.getId()%>"/>
 							<input class="oprationButton" type="submit"
@@ -170,7 +189,7 @@
 					<th class="oprationtd">操作</th>
 				</tr>
 				<%
-					for (Tractor t : list_tractors) {
+					for(Tractor t : list_tractors) {
 				%>
 				<tr>
 					<td class="nametd">
@@ -202,59 +221,48 @@
 			</table>
 		</div>
 	</div>
-	<script>
-        function ShowUsers() {
-            document.getElementById("_usersdiv").style.display = "initial";
-            document.getElementById("_tractorsdiv").style.display = "none";
-            sessionStorage.setItem('key_page', 'user');
-        }
-
-        function ShowTractors() {
-            document.getElementById("_tractorsdiv").style.display = "initial";
-            document.getElementById("_usersdiv").style.display = "none";
-            sessionStorage.setItem('key_page', 'tractor');
-        }
-
-        let _page = sessionStorage.getItem('key_page');
-        if (_page === 'user') {
-            ShowUsers();
-        } else if (_page === 'tractor') {
-            ShowTractors();
-        }
-
-	</script>
 	<%
-	} else if (type == PageType.CheckUser) {
+	} else if(type == PageType.CheckUser) {
 	%>
-	<div class="userInformationDIV">
-		<p>
+	<div style="overflow-y: scroll;height: 100%;">
+		<p style="text-align: center;font-size: xx-large; color: lightcyan;">
 			查看用户农机信息：<%=check_user.getUsername()%>
 		</p>
-		<table>
+		<table style="width:100%; table-layout:fixed; word-wrap:break-word; padding:0;">
 			<tr>
-				<th>编号</th>
-				<th>名称</th>
-				<th>描述</th>
-				<th>马力</th>
-				<th>价格</th>
+				<th style="width:10%; text-align:center; font-size:large; color: lightcyan;">
+					编号
+				</th>
+				<th style="width:20%; text-align:center; font-size:large; color: lightcyan;">
+					名称
+				</th>
+				<th style="width:50%; text-align:center; font-size:large; color: lightcyan;">
+					描述
+				</th>
+				<th style="width:10%; text-align:center; font-size:large; color: lightcyan;">
+					马力
+				</th>
+				<th style="width:10%; text-align:center; font-size:large; color: lightcyan;">
+					价格
+				</th>
 			</tr>
 			<%
-				for (Tractor t : check_user.getOwned()) {
+				for(Tractor t : check_user.getOwned()) {
 			%>
 			<tr>
-				<td>
+				<td style="width:10%; text-align:center; font-size:large; color: lightcyan;">
 					<%=t.getId()%>
 				</td>
-				<td>
+				<td style="width:20%; text-align:center; font-size:large; color: lightcyan;">
 					<%=t.getName()%>
 				</td>
-				<td>
+				<td style="width:50%; text-align:center; font-size:large; color: lightcyan;">
 					<%=t.getDescription()%>
 				</td>
-				<td>
+				<td style="width:10%; text-align:center; font-size:large; color: lightcyan;">
 					<%=t.getPower()%>
 				</td>
-				<td>
+				<td style="width:10%; text-align:center; font-size:large; color: lightcyan;">
 					<%=t.getPrice()%>
 				</td>
 			</tr>
@@ -266,6 +274,30 @@
 	<%
 		}
 	%>
+	<script>
+        function ShowUsers() {
+            document.getElementById("_usersdiv").style.display = "initial";
+            document.getElementById("_tractorsdiv").style.display = "none";
+            document.getElementById("showAllUsersButton").value = "· 查看所有用户 ·";
+            document.getElementById("showAllTractorsButton").value = "查看所有农机";
+            sessionStorage.setItem('key_page', 'user');
+        }
+
+        function ShowTractors() {
+            document.getElementById("_tractorsdiv").style.display = "initial";
+            document.getElementById("_usersdiv").style.display = "none";
+            document.getElementById("showAllUsersButton").value = "查看所有用户";
+            document.getElementById("showAllTractorsButton").value = "· 查看所有农机 ·";
+            sessionStorage.setItem('key_page', 'tractor');
+        }
+
+        let _page = sessionStorage.getItem('key_page');
+        if (_page === 'user') {
+            ShowUsers();
+        } else if (_page === 'tractor') {
+            ShowTractors();
+        }
+	</script>
 </div>
 </body>
 </html>

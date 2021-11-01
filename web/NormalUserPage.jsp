@@ -7,10 +7,10 @@
     <meta charset="UTF-8">
     <title>User</title>
 </head>
-<body>
-<%
+<body><%
     User user = (User) request.getAttribute("user");
 %>
+
 <div class="container">
     <div class="left">
         <table class="mytable">

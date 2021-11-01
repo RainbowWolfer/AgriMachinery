@@ -1,7 +1,10 @@
 package model;
 
+import database.MyDataBase;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class User {
 	private int id;
@@ -34,10 +37,10 @@ public class User {
 	
 	
 	public static User Check(String username, String password) {
-		if (username.equals("1234") && password.equals("1234")) {
+		if(username.equals("1234") && password.equals("1234")) {
 			return new User(1, username, password, "18919626820", "SA", true);
-		} else if (username.equals("123") && password.equals("123")) {
-			return new User(2, username, password, "12345367890", "LA", false);
+		} else if(username.equals("123") && password.equals("123")) {
+			return new User(2, username, password, "12345367890", "LA", false, MyDataBase.GetRandomTractors(new Random().nextInt(10) + 1));
 		}
 		return null;
 	}

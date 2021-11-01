@@ -29,8 +29,8 @@ public class SubmitModify extends HttpServlet {
 //		resp.getWriter().println(originalName);
 //		resp.getWriter().println(originalName == null);
 		
-		if(originalName.equals("null")) {
-			if(MyDataBase.AddUser(new User(username, password, isadmin != null))) {
+		if (originalName.equals("null")) {
+			if (MyDataBase.AddUser(username, password, "", "", isadmin != null)) {
 				req.setAttribute("entrace_alert", "成功添加用户");
 			} else {
 				req.setAttribute("entrace_alert", "添加用户失败");
@@ -38,10 +38,10 @@ public class SubmitModify extends HttpServlet {
 		} else {
 			User user = MyDataBase.FindUser(originalName);
 			boolean result = false;
-			if(user != null) {
-				result = MyDataBase.ModifyUser(user, new User(username, password, isadmin != null));
+			if (user != null) {
+				result = MyDataBase.ModifyUser(user.getId(), username, password, "", "", isadmin != null);
 			}
-			if(result) {
+			if (result) {
 				req.setAttribute("entrace_alert", "成功修改用户");
 			} else {
 				req.setAttribute("entrace_alert", "修改用户失败");
@@ -60,8 +60,8 @@ public class SubmitModify extends HttpServlet {
 		String price = req.getParameter("priceInput");
 		String originalName = req.getParameter("originalName");
 		
-		if(originalName.equals("null")) {
-			if(MyDataBase.AddTractor(new Tractor(name, description, Integer.parseInt(price)))) {
+		if (originalName.equals("null")) {
+			if (MyDataBase.AddTractor(name, description, 1, Integer.parseInt(price))) {
 				req.setAttribute("entrace_alert", "成功添加农机");
 			} else {
 				req.setAttribute("entrace_alert", "添加农机失败");
@@ -69,10 +69,10 @@ public class SubmitModify extends HttpServlet {
 		} else {
 			Tractor tractor = MyDataBase.FindTractor(originalName);
 			boolean result = false;
-			if(tractor != null) {
-				result = MyDataBase.ModifyTractor(tractor, new Tractor(name, description, Integer.parseInt(price)));
+			if (tractor != null) {
+				result = MyDataBase.ModifyTractor(tractor.getId(), name, description, 2, Integer.parseInt(price));
 			}
-			if(result) {
+			if (result) {
 				req.setAttribute("entrace_alert", "成功修改农机");
 			} else {
 				req.setAttribute("entrace_alert", "修改农机失败");

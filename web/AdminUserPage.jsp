@@ -2,6 +2,7 @@
 <%@ page import="database.MyDataBase" %>
 <%@ page import="model.Tractor" %>
 <%@ page import="java.util.List" %>
+<%@ page import="utility.PageType" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html lang="en">
 <link type="text/css" href="AdminUserPage.css" rel="stylesheet">
@@ -12,6 +13,13 @@
 
 	//prevent refreshing show the same message (but it does not seem to work correctly)
 	request.setAttribute("entrace_alert", "");
+
+	User check_user = (User) request.getAttribute("check_user");
+
+	PageType type = PageType.Normal;
+	if (check_user != null) {
+		type = PageType.CheckUser;
+	}
 %>
 <head>
 	<title>Admin</title>
@@ -75,6 +83,9 @@
 	</div>
 </div>
 <div class="right">
+	<%
+		if (type == PageType.Normal) {
+	%>
 	<div class="usersDIV" id="_usersdiv">
 		<%
 			List<User> list_users = MyDataBase.GetAllUsers();
@@ -94,7 +105,7 @@
 					<th class="oprationtd">操作</th>
 				</tr>
 				<%
-					for(User u : list_users) {
+					for (User u : list_users) {
 				%>
 				<tr>
 					<td class="nametd">
@@ -126,6 +137,12 @@
 							<input class="oprationButton" type="submit"
 							       value="修改"/>
 						</form>
+						<form style="margin: 0" action="checkUserInfo" method="get">
+							<input name="ObjectInput" type="hidden"
+							       value="<%=u.getId()%>"/>
+							<input class="oprationButton" type="submit"
+							       value="查看"/>
+						</form>
 					</td>
 				</tr>
 				<%
@@ -153,7 +170,7 @@
 					<th class="oprationtd">操作</th>
 				</tr>
 				<%
-					for(Tractor t : list_tractors) {
+					for (Tractor t : list_tractors) {
 				%>
 				<tr>
 					<td class="nametd">
@@ -206,6 +223,49 @@
         }
 
 	</script>
+	<%
+	} else if (type == PageType.CheckUser) {
+	%>
+	<div class="userInformationDIV">
+		<p>
+			查看用户农机信息：<%=check_user.getUsername()%>
+		</p>
+		<table>
+			<tr>
+				<th>编号</th>
+				<th>名称</th>
+				<th>描述</th>
+				<th>马力</th>
+				<th>价格</th>
+			</tr>
+			<%
+				for (Tractor t : check_user.getOwned()) {
+			%>
+			<tr>
+				<td>
+					<%=t.getId()%>
+				</td>
+				<td>
+					<%=t.getName()%>
+				</td>
+				<td>
+					<%=t.getDescription()%>
+				</td>
+				<td>
+					<%=t.getPower()%>
+				</td>
+				<td>
+					<%=t.getPrice()%>
+				</td>
+			</tr>
+			<%
+				}
+			%>
+		</table>
+	</div>
+	<%
+		}
+	%>
 </div>
 </body>
 </html>

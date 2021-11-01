@@ -1,13 +1,17 @@
 package model;
 
 public class Tractor {
+	private int id;
 	private String name;
 	private String description;
+	private int power;
 	private int price;
 	
-	public Tractor(String name, String description, int price) {
+	public Tractor(int id, String name, String description, int power, int price) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.power = power;
 		this.price = price;
 	}
 	
@@ -33,5 +37,21 @@ public class Tractor {
 	
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getPower() {
+		return power;
+	}
+	
+	public void setPower(int power) {
+		this.power = power;
 	}
 }

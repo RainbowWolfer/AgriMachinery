@@ -124,7 +124,13 @@
 	}
 
 	.pricetd {
-		width: 20%;
+		width: 10%;
+		font-size: x-large;
+		text-align: center;
+	}
+
+	.powertd {
+		width: 10%;
 		font-size: x-large;
 		text-align: center;
 	}
@@ -259,11 +265,12 @@
 				<tr>
 					<th class="nametd">名称</th>
 					<th class="descriptiondtd">描述</th>
+					<th class="powertd">马力</th>
 					<th class="pricetd">价格</th>
 					<th class="oprationtd">操作</th>
 				</tr>
 				<%
-					for(Tractor t : list_tractors) {
+					for (Tractor t : list_tractors) {
 				%>
 				<tr>
 					<td class="nametd">
@@ -274,6 +281,9 @@
 					</td>
 					<td class="pricetd">
 						<%=t.getPrice()%>
+					</td>
+					<td class="powertd">
+						<%=t.getPower()%>
 					</td>
 					<td class="oprationtd">
 						<form style="margin: 0" action="delete" method="post"

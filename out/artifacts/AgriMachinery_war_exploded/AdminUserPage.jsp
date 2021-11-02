@@ -17,7 +17,7 @@
 	User check_user = (User) request.getAttribute("check_user");
 
 	PageType type = PageType.Normal;
-	if(check_user != null) {
+	if (check_user != null) {
 		type = PageType.CheckUser;
 	}
 %>
@@ -50,7 +50,7 @@
 				</td>
 			</tr>
 			<%
-				if(type == PageType.Normal) {
+				if (type == PageType.Normal) {
 			%>
 			<tr>
 				<td>
@@ -67,7 +67,7 @@
 				</td>
 			</tr>
 			<%
-			} else if(type == PageType.CheckUser) {
+			} else if (type == PageType.CheckUser) {
 			%>
 			<tr>
 				<td>
@@ -102,7 +102,7 @@
 </div>
 <div class="right">
 	<%
-		if(type == PageType.Normal) {
+		if (type == PageType.Normal) {
 	%>
 	<div class="usersDIV" id="_usersdiv">
 		<%
@@ -117,31 +117,43 @@
 		<div class="div_table">
 			<table class="tractorstable">
 				<tr>
-					<th class="nametd">姓名</th>
-					<th class="descriptiondtd">密码</th>
-					<th class="pricetd">是否为管理员</th>
-					<th class="oprationtd">操作</th>
+					<th class="table_content" style="width:20%;">姓名</th>
+					<th class="table_content" style="width:20%;">密码</th>
+					<th class="table_content" style="width:20%;">手机</th>
+					<th class="table_content" style="width:10%;">籍贯</th>
+					<th class="table_content" style="width:20%;">是否为管理员</th>
+					<th class="table_content" style="width:10%;">操作</th>
 				</tr>
 				<%
-					for(User u : list_users) {
+					for (User u : list_users) {
 				%>
 				<tr>
-					<td class="nametd">
+					<td class="table_content" style="width:20%;">
 						<p>
 							<%=u.getUsername()%>
 						</p>
 					</td>
-					<td class="descriptiondtd">
+					<td class="table_content" style="width:20%;">
 						<p>
 							<%=u.getPassword()%>
 						</p>
 					</td>
-					<td class="pricetd">
+					<td class="table_content" style="width:20%;">
+						<p>
+							<%=u.getPhone()%>
+						</p>
+					</td>
+					<td class="table_content" style="width:10%;">
+						<p>
+							<%=u.getPlace()%>
+						</p>
+					</td>
+					<td class="table_content" style="width:20%;">
 						<p>
 							<%=u.isAdmin()%>
 						</p>
 					</td>
-					<td class="oprationtd">
+					<td class="table_content" style="width:10%;">
 						<form style="margin: 0" action="delete" method="get"
 						      onsubmit="return confirm('确认删除用户'.concat('<%=u.getUsername()%>'))">
 							<input name="ObjectInput" type="hidden"
@@ -185,11 +197,12 @@
 				<tr>
 					<th class="nametd">名称</th>
 					<th class="descriptiondtd">描述</th>
+					<th class="powertd">马力</th>
 					<th class="pricetd">价格</th>
 					<th class="oprationtd">操作</th>
 				</tr>
 				<%
-					for(Tractor t : list_tractors) {
+					for (Tractor t : list_tractors) {
 				%>
 				<tr>
 					<td class="nametd">
@@ -197,6 +210,9 @@
 					</td>
 					<td class="descriptiondtd" id="descriptioncontent">
 						<%=t.getDescription()%>
+					</td>
+					<td class="powertd">
+						<%=t.getPower()%>
 					</td>
 					<td class="pricetd">
 						<%=t.getPrice()%>
@@ -222,7 +238,7 @@
 		</div>
 	</div>
 	<%
-	} else if(type == PageType.CheckUser) {
+	} else if (type == PageType.CheckUser) {
 	%>
 	<div style="overflow-y: scroll;height: 100%;">
 		<p style="text-align: center;font-size: xx-large; color: lightcyan;">
@@ -247,7 +263,7 @@
 				</th>
 			</tr>
 			<%
-				for(Tractor t : check_user.getOwned()) {
+				for (Tractor t : check_user.getOwned()) {
 			%>
 			<tr>
 				<td style="width:10%; text-align:center; font-size:large; color: lightcyan;">
@@ -295,6 +311,8 @@
         if (_page === 'user') {
             ShowUsers();
         } else if (_page === 'tractor') {
+            ShowTractors();
+        } else {
             ShowTractors();
         }
 	</script>

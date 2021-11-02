@@ -3,6 +3,7 @@ package servlet;
 import database.MyDataBase;
 import model.Tractor;
 import model.User;
+import utility.Methods;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,15 +19,19 @@ public class DeleteUserOrTractor extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String username = req.getParameter("ObjectInput");
-		User u = MyDataBase.FindUser(username);
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		
+		int id = Integer.parseInt(req.getParameter("ObjectInput"));
+		User u = MyDataBase.FindUser(id);
 		if(u != null) {
 			MyDataBase.RemoveUser(u);
 			req.setAttribute("entrace_alert", "成功删除用户");
 		} else {
 			req.setAttribute("entrace_alert", "删除用户失败");
 		}
-		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
+//		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
+		Methods.ForwardToBase(req, resp);
 	}
 	
 	/**
@@ -34,6 +39,9 @@ public class DeleteUserOrTractor extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		
 		String name = req.getParameter("ObjectInput");
 		Tractor t = MyDataBase.FindTractor(name);
 		if(t != null) {
@@ -42,6 +50,7 @@ public class DeleteUserOrTractor extends HttpServlet {
 		} else {
 			req.setAttribute("entrace_alert", "删除农机失败");
 		}
-		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
+//		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
+		Methods.ForwardToBase(req, resp);
 	}
 }

@@ -14,6 +14,9 @@ public class AddNewUserOrTractor extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		
 		req.getRequestDispatcher("ModifyUser.jsp").forward(req, resp);
 	}
 	
@@ -22,6 +25,9 @@ public class AddNewUserOrTractor extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		
 		req.getRequestDispatcher("ModifyTractor.jsp").forward(req, resp);
 	}
 }

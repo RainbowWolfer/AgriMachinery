@@ -44,7 +44,7 @@ public class Login extends HttpServlet {
 			req.getRequestDispatcher("Login.jsp").forward(req, resp);
 		} else {
 			req.setAttribute("info", info);
-			req.setAttribute("user", found);
+//			req.setAttribute("user", found);
 			req.getSession().setAttribute("user", found);
 			if(found.isAdmin()) {
 				req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
@@ -71,7 +71,7 @@ public class Login extends HttpServlet {
 			resp.addCookie(c_u);
 			resp.addCookie(c_p);
 			
-			req.setAttribute("user", user);
+//			req.setAttribute("user", user);
 			req.getSession().setAttribute("user", user);
 			if(user.isAdmin()) {
 				req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);

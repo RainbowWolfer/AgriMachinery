@@ -56,6 +56,7 @@ public class MyDataBase {
 		return tractors;
 	}
 	
+	//obsolote
 	public static Tractor FindTractor(String name) {
 		for(var t : tractors) {
 			if(t.getName().equals(name)) {
@@ -98,6 +99,7 @@ public class MyDataBase {
 		return users;
 	}
 	
+	//obsolote
 	public static User FindUser(String username) {
 		for(var u : users) {
 			if(u.getUsername().equals(username)) {

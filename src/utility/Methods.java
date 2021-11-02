@@ -41,6 +41,8 @@ public final class Methods {
 	}
 	
 	public static void ForwardToBase(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
 		User current = (User) req.getSession().getAttribute("user");
 		if(current == null) {
 			req.getRequestDispatcher("Login.jsp").forward(req, resp);

@@ -36,7 +36,8 @@
 			<tr>
 				<th>描述：</th>
 				<td>
-					<textarea name="descriptionInput" placeholder='<%=tractor == null ? "" : tractor.getDescription()%>' style="height: 100px"></textarea>
+					<textarea name="descriptionInput"
+					          style="height: 100px"><%=tractor == null ? "" : tractor.getDescription()%></textarea>
 					<%--<input name="descriptionInput" style="height: 100px;"
 					       type="text"
 					       value='<%=tractor == null ? "" : tractor.getDescription()%>'/>--%>

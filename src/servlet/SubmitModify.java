@@ -3,6 +3,7 @@ package servlet;
 import database.MyDataBase;
 import model.Tractor;
 import model.User;
+import utility.Methods;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +19,9 @@ public class SubmitModify extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		
 		String username = req.getParameter("usernameInput");
 		String password = req.getParameter("passwordInput");
 		String isadmin = req.getParameter("adminInput");
@@ -29,8 +33,8 @@ public class SubmitModify extends HttpServlet {
 //		resp.getWriter().println(originalName);
 //		resp.getWriter().println(originalName == null);
 		
-		if (originalName.equals("null")) {
-			if (MyDataBase.AddUser(username, password, "", "", isadmin != null)) {
+		if(originalName.equals("null")) {
+			if(MyDataBase.AddUser(username, password, "", "", isadmin != null)) {
 				req.setAttribute("entrace_alert", "成功添加用户");
 			} else {
 				req.setAttribute("entrace_alert", "添加用户失败");
@@ -38,16 +42,17 @@ public class SubmitModify extends HttpServlet {
 		} else {
 			User user = MyDataBase.FindUser(originalName);
 			boolean result = false;
-			if (user != null) {
+			if(user != null) {
 				result = MyDataBase.ModifyUser(user.getId(), username, password, "", "", isadmin != null);
 			}
-			if (result) {
+			if(result) {
 				req.setAttribute("entrace_alert", "成功修改用户");
 			} else {
 				req.setAttribute("entrace_alert", "修改用户失败");
 			}
 		}
-		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
+//		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
+		Methods.ForwardToBase(req, resp);
 	}
 	
 	/**
@@ -55,13 +60,16 @@ public class SubmitModify extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		
 		String name = req.getParameter("nameInput");
 		String description = req.getParameter("descriptionInput");
 		String price = req.getParameter("priceInput");
 		String originalName = req.getParameter("originalName");
 		
-		if (originalName.equals("null")) {
-			if (MyDataBase.AddTractor(name, description, 1, Integer.parseInt(price))) {
+		if(originalName.equals("null")) {
+			if(MyDataBase.AddTractor(name, description, 1, Integer.parseInt(price))) {
 				req.setAttribute("entrace_alert", "成功添加农机");
 			} else {
 				req.setAttribute("entrace_alert", "添加农机失败");
@@ -69,15 +77,12 @@ public class SubmitModify extends HttpServlet {
 		} else {
 			Tractor tractor = MyDataBase.FindTractor(originalName);
 			boolean result = false;
-			if (tractor != null) {
+			if(tractor != null) {
 				result = MyDataBase.ModifyTractor(tractor.getId(), name, description, 2, Integer.parseInt(price));
 			}
-			if (result) {
-				req.setAttribute("entrace_alert", "成功修改农机");
-			} else {
-				req.setAttribute("entrace_alert", "修改农机失败");
-			}
+			req.setAttribute("entrace_alert", result ? "成功修改农机" : "修改农机失败");
 		}
-		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
+//		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
+		Methods.ForwardToBase(req, resp);
 	}
 }

@@ -186,12 +186,23 @@
 
 </style>
 <%
-	User user = (User) request.getAttribute("user");
+	User user = (User) request.getSession().getAttribute("user");
+
+	String entrace_alert = (String) request.getAttribute("entrace_alert");
+	entrace_alert = entrace_alert == null ? "" : entrace_alert;
+
+	//prevent refreshing show the same message (but it does not seem to work correctly)
+	request.setAttribute("entrace_alert", "");
 %>
 
 <head>
 	<meta charset="UTF-8">
 	<title>User</title>
+	<script>
+        if ('<%=entrace_alert%>'.length !== 0) {
+            alert('<%=entrace_alert%>');
+        }
+	</script>
 </head>
 <body>
 <div class="left">
@@ -237,7 +248,7 @@
 <div class="right">
 	<div class="tractorsDIV" id="_tractorsdiv">
 		<%
-			assert user != null;//what does it do?
+			//			assert user != null;//what does it do?
 			List<Tractor> list_tractors = user.getOwned();
 		%>
 		<p class="righttitle">
@@ -268,13 +279,13 @@
 						<form style="margin: 0" action="delete" method="post"
 						      onsubmit="return confirm('确认删除农机'.concat('<%=t.getName()%>'))">
 							<input name="ObjectInput" type="hidden"
-							       value="<%=t.getName()%>"/>
+							       value="<%=t.getId()%>"/>
 							<input class="oprationButton" type="submit"
 							       value="删除"/>
 						</form>
 						<form style="margin: 0" action="modify" method="post">
 							<input name="ObjectInput" type="hidden"
-							       value="<%=t.getName()%>"/>
+							       value="<%=t.getId()%>"/>
 							<input class="oprationButton" type="submit"
 							       value="修改"/>
 						</form>

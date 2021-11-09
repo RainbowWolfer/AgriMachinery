@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <link type="text/css" href="Login.css" rel="stylesheet">
 <head>
@@ -25,7 +25,7 @@
 			<tr>
 				<td class="MyInput">Password:</td>
 				<td>
-					<input class="MyInput" name="PasswordInput" type="text"/>
+					<input class="MyInput" name="PasswordInput" type="password"/>
 				</td>
 			</tr>
 		</table>

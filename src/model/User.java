@@ -1,10 +1,6 @@
 package model;
 
-import database.MyDataBase;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class User {
 	private int id;
@@ -13,7 +9,6 @@ public class User {
 	private String phone;
 	private String place;
 	private boolean isAdmin;
-	private final List<Tractor> owned;
 	
 	public User(int id, String username, String password, String phone, String place, boolean isAdmin) {
 		this.id = id;
@@ -22,35 +17,38 @@ public class User {
 		this.phone = phone;
 		this.place = place;
 		this.isAdmin = isAdmin;
-		this.owned = new ArrayList<Tractor>();
 	}
 	
-	public User(int id, String username, String password, String phone, String place, boolean isAdmin, List<Tractor> owned) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.phone = phone;
-		this.place = place;
-		this.isAdmin = isAdmin;
-		this.owned = owned;
+	public User(List<String> sql_line) {
+		try {
+			if(sql_line.size() != 5) {
+				throw new Exception("SQL String to User Error");
+			} else {
+				id = Integer.parseInt(sql_line.get(0));
+				username = sql_line.get(1);
+				password = sql_line.get(2);
+				phone = sql_line.get(3);
+				place = sql_line.get(4);
+				isAdmin = sql_line.get(5).toLowerCase().equals("true");
+			}
+		} catch(Exception e) {
+			id = -1;
+			username = "ERROR";
+			password = "ERROR";
+			phone = "ERROR";
+			place = "ERROR";
+			isAdmin = false;
+			e.printStackTrace();
+		}
 	}
-	
 	
 	public static User Check(String username, String password) {
 		if(username.equals("1234") && password.equals("1234")) {
 			return new User(1, username, password, "18919626820", "SA", true);
 		} else if(username.equals("123") && password.equals("123")) {
-			return new User(2, username, password, "12345367890", "LA", false, MyDataBase.GetRandomTractors(new Random().nextInt(10) + 1));
+			return new User(2, username, password, "12345367890", "LA", false);
 		}
 		return null;
-	}
-	
-	public List<Tractor> getOwned() {
-		return owned;
-	}
-	
-	public void addOwned(Tractor newOne) {
-	
 	}
 	
 	public boolean isAdmin() {

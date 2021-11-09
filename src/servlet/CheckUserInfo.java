@@ -1,7 +1,6 @@
 package servlet;
 
 import database.MyDataBase;
-import model.Tractor;
 import model.User;
 import utility.Methods;
 
@@ -21,7 +20,7 @@ public class CheckUserInfo extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		
 		int id = Integer.parseInt(req.getParameter("ObjectInput"));
-		User u = MyDataBase.FindUser(id);
+		User u = MyDataBase.GetUser(id);
 		req.setAttribute("check_user", u);
 //		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 		Methods.ForwardToBase(req, resp);

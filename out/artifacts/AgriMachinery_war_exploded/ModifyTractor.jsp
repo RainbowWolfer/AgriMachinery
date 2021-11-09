@@ -5,7 +5,6 @@
 <link rel="stylesheet" type="text/css" href="ModifyUser.css"/>
 <%
 	Tractor tractor = (Tractor) request.getAttribute("modify_target");
-	int id = MyDataBase.GetTractorID(tractor);
 %>
 <head>
 	<title>
@@ -23,7 +22,7 @@
 			<tr>
 				<th>编号：</th>
 				<td>
-					<%=id%>
+					<%=tractor == null ? "" : tractor.getId()%>
 				</td>
 			</tr>
 			<tr>
@@ -58,8 +57,8 @@
 				</td>
 			</tr>
 		</table>
-		<input name="originalName" type="hidden"
-		       value='<%=tractor != null ? tractor.getName() : null%>'/>
+		<input name="tractor_id" type="hidden"
+		       value='<%=tractor != null ? tractor.getId() : -1%>'/>
 		<input type="submit" value="确认"/>
 	</form>
 </div>

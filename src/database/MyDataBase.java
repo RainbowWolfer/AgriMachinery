@@ -18,37 +18,11 @@ public class MyDataBase {
 	private static final String USER = "root";
 	private static final String PASSWORD = "123456";
 	
-	private static final List<User> users;
-	private static final List<Tractor> tractors;
-	
 	static {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
+		} catch(ClassNotFoundException e) {
 			e.printStackTrace();
-		}
-//		GetAllUsers();
-		tractors = new ArrayList<Tractor>();
-		users = new ArrayList<User>();
-		
-		for (int i = 0; i < new Random().nextInt(20) + 5; i++) {
-			tractors.add(new Tractor(
-					tractors.size() + 1,
-					Methods.GetRandomString(5),
-					Methods.GetRandomString(200),
-					new Random().nextInt(20),
-					new Random().nextInt(5000)));
-		}
-		
-		for (int i = 0; i < new Random().nextInt(20) + 5; i++) {
-			users.add(new User(
-					users.size() + 1,
-					Methods.GetRandomString(5),
-					Methods.GetRandomString(10),
-					Methods.GenerateRandomNumber(11),
-					Methods.GetRandomString(2).toUpperCase(),
-					new Random().nextInt(2) == 1,
-					GetRandomTractors(new Random().nextInt(10) + 1)));
 		}
 	}
 	
@@ -58,16 +32,16 @@ public class MyDataBase {
 	
 	public static void Close(Connection connection, Statement statement, ResultSet resultSet) {
 		try {
-			if (connection != null) {
+			if(connection != null) {
 				connection.close();
 			}
-			if (statement != null) {
+			if(statement != null) {
 				statement.close();
 			}
-			if (resultSet != null) {
+			if(resultSet != null) {
 				resultSet.close();
 			}
-		} catch (SQLException throwables) {
+		} catch(SQLException throwables) {
 			throwables.printStackTrace();
 		}
 	}
@@ -84,19 +58,20 @@ public class MyDataBase {
 			ResultSetMetaData meta = resultSet.getMetaData();
 			List<String> head = new ArrayList<String>();
 			int columnCount = meta.getColumnCount();
-			for (int i = 1; i <= columnCount; i++) {
+			for(int i = 1; i <= columnCount; i++) {
 				head.add(meta.getColumnLabel(i));
 			}
 			result.add(head);
-			while (resultSet.next()) {
+			while(resultSet.next()) {
 				List<String> line = new ArrayList<String>();
-				for (int i = 1; i <= columnCount; i++) {
+				for(int i = 1; i <= columnCount; i++) {
 					line.add(resultSet.getString(i));
 				}
 				result.add(line);
 			}
 			return result;
-		} catch (SQLException throwables) {
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
 			return null;
 		} finally {
 			Close(connection, statement, resultSet);
@@ -111,7 +86,8 @@ public class MyDataBase {
 			statement = connection.createStatement();
 			statement.execute(sql);
 			return true;
-		} catch (SQLException throwables) {
+		} catch(SQLException throwables) {
+			throwables.printStackTrace();
 			return false;
 		} finally {
 			Close(connection, statement, null);
@@ -121,16 +97,16 @@ public class MyDataBase {
 	public static Tractor[] GetAllTractors() {
 		List<Tractor> tractors = new ArrayList<Tractor>();
 		List<List<String>> result = Query("select * from tractors");
-		if (result == null) {
+		if(result == null) {
 			return new Tractor[]{};
 		}
-		for (List<String> line : result) {
+		for(List<String> line : result.subList(1, result.size())) {
 			tractors.add(new Tractor(
 					Integer.parseInt(line.get(0)),
 					line.get(1),
 					line.get(2),
 					Integer.parseInt(line.get(3)),
-					Integer.parseInt(line.get(4))));
+					Float.parseFloat(line.get(4))));
 		}
 		return tractors.toArray(Tractor[]::new);
 	}
@@ -138,11 +114,11 @@ public class MyDataBase {
 	public static User[] GetAllUsers() {
 		List<User> users = new ArrayList<User>();
 		List<List<String>> result = Query("select * from users");
-		if (result == null) {
+		if(!IsResultValid((result))) {
 			return new User[]{};
 		}
-		for (List<String> line : result) {
-//			line.forEach(System.out::println);
+		Methods.PrintListList(result);
+		for(List<String> line : result.subList(1, result.size())) {
 			users.add(new User(
 					Integer.parseInt(line.get(0)),
 					line.get(1),
@@ -155,100 +131,55 @@ public class MyDataBase {
 		return users.toArray(User[]::new);
 	}
 	
-	public static List<Tractor> GetRandomTractors(int maxSize) {
-		List<Tractor> result = new ArrayList<Tractor>();
-		for (int i = 0; i < maxSize; i++) {
-			Tractor found = tractors.get(new Random().nextInt(tractors.size()));
-			if (!result.contains(found)) {
-				result.add(found);
-			}
-		}
-		return result;
+	public static boolean IsResultValid(List<List<String>> result) {
+		return result != null && result.size() != 0 && result.get(0).size() != 0;
 	}
 	
-	/*public static List<Tractor> GetAllTractors() {
-		return tractors;
-	}*/
-	
-	//obsolote
-	public static Tractor FindTractor(String name) {
-		for (var t : tractors) {
-			if (t.getName().equals(name)) {
-				return t;
-			}
-		}
-		return null;
-	}
-	
-	
-	public static Tractor FindTractor(int id) {
-		return tractors.stream().filter(t -> t.getId() == id).findAny().orElse(null);
-	}
-	
-	public static int GetTractorID(Tractor tractor) {
-		Tractor found = tractors.stream().filter(t -> t.equals(tractor)).findAny().orElse(null);
-		return found == null ? tractors.size() + 1 : found.getId();
+	public static Tractor GetTractor(int id) {
+		List<List<String>> result = Query("select * from tractors where t_id = " + id + ";");
+		return IsResultValid(result) ? new Tractor(result.get(1)) : null;
 	}
 	
 	public static boolean RemoveTractor(Tractor tractor) {
-		return tractors.remove(tractor);
+		return NonQuery("delete from tractors where t_id = " + tractor.getId() + ";");
 	}
 	
 	public static boolean AddTractor(String name, String description, int power, int price) {
-		tractors.add(new Tractor(tractors.size() + 1, name, description, power, price));
-		return true;
+		return NonQuery(String.format("insert into tractors(t_name, t_description, t_power, t_price) values ('%s','%s','%s','%s')", name, description, power, price));
 	}
 	
 	public static boolean ModifyTractor(int oldID, String new_name, String new_description, int new_power, int new_price) {
-		Tractor found = tractors.stream().filter(t -> t.getId() == oldID).findAny().orElse(null);
-		if (found == null) {
-			return false;
-		}
-		tractors.set(tractors.indexOf(found), new Tractor(tractors.size() + 1, new_name, new_description, new_power, new_price));
-		return true;
+		return NonQuery(String.format("update tractors set t_name = '%s', t_description = '%s', t_power = '%s', t_price = '%s' where t_id = '%s'", new_name, new_description, new_power, new_price, oldID));
 	}
 	
-	
-	/*public static List<User> GetAllUsers() {
-		return users;
-	}*/
-	
-	//obsolote
-	public static User FindUser(String username) {
-		for (var u : users) {
-			if (u.getUsername().equals(username)) {
-				return u;
-			}
-		}
-		return null;
-	}
-	
-	public static User FindUser(int id) {
-		return users.stream().filter(u -> u.getId() == id).findAny().orElse(null);
-	}
-	
-	public static int GetUserID(User user) {
-		User found = users.stream().filter(u -> u.equals(user)).findAny().orElse(null);
-		return found == null ? users.size() + 1 : found.getId();
+	public static User GetUser(int id) {
+		List<List<String>> result = Query("select * from users where u_id = " + id + ";");
+		return IsResultValid(result) ? new User(result.get(1)) : null;
 	}
 	
 	public static boolean RemoveUser(User user) {
-		return users.remove(user);
+		return NonQuery("delete from users where u_id = " + user.getId() + ";");
 	}
 	
 	public static boolean AddUser(String username, String password, String phone, String place, boolean isAdmin) {
-		users.add(new User(users.size() + 1, username, password, phone, place, isAdmin));
-		return true;
+		return NonQuery(String.format("insert into users(u_username, u_password, u_phone, u_place, u_isAdmin) values ('%s','%s','%s','%s','%s')", username, password, phone, place, isAdmin));
 	}
 	
 	public static boolean ModifyUser(int oldID, String new_username, String new_password, String new_phone, String new_place, boolean new_isAdmin) {
-		User found = users.stream().filter(c -> c.getId() == oldID).findAny().orElse(null);
-		if (found == null) {
-			return false;
-		}
-		users.set(users.indexOf(found), new User(found.getId(), new_username, new_password, new_phone, new_place, new_isAdmin));
-		return true;
+		return NonQuery(String.format("update users set u_username = '%s', u_password = '%s', u_phone = '%s', u_place = '%s', u_isAdmin = '%s' where t_id = '%s'", new_username, new_password, new_phone, new_place, new_isAdmin, oldID));
 	}
 	
+	public static List<Tractor> FindUserOwned(User user) {
+		List<Tractor> tractors = new ArrayList<Tractor>();
+		if(user == null) {
+			return tractors;
+		}
+		List<List<String>> result = Query("SELECT t_id, t_name, t_description, t_power, t_price FROM user_owned, tractors WHERE o_tractor_id = t_id AND o_user_id = " + user.getId() + ";");
+		if(!IsResultValid(result)) {
+			return tractors;
+		}
+		result.forEach(t -> tractors.add(new Tractor(t)));
+		return tractors;
+	}
 	
 }

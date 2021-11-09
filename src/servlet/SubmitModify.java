@@ -25,22 +25,17 @@ public class SubmitModify extends HttpServlet {
 		String username = req.getParameter("usernameInput");
 		String password = req.getParameter("passwordInput");
 		String isadmin = req.getParameter("adminInput");
-		String originalName = req.getParameter("originalName");
-
-//		resp.getWriter().println(username);
-//		resp.getWriter().println(password);
-//		resp.getWriter().println(isadmin);
-//		resp.getWriter().println(originalName);
-//		resp.getWriter().println(originalName == null);
 		
-		if(originalName.equals("null")) {
+		int user_id = Integer.parseInt(req.getParameter("user_id"));
+		
+		if(user_id == -1) {
 			if(MyDataBase.AddUser(username, password, "", "", isadmin != null)) {
 				req.setAttribute("entrace_alert", "成功添加用户");
 			} else {
 				req.setAttribute("entrace_alert", "添加用户失败");
 			}
 		} else {
-			User user = MyDataBase.FindUser(originalName);
+			User user = MyDataBase.GetUser(user_id);
 			boolean result = false;
 			if(user != null) {
 				result = MyDataBase.ModifyUser(user.getId(), username, password, "", "", isadmin != null);
@@ -66,16 +61,17 @@ public class SubmitModify extends HttpServlet {
 		String name = req.getParameter("nameInput");
 		String description = req.getParameter("descriptionInput");
 		String price = req.getParameter("priceInput");
-		String originalName = req.getParameter("originalName");
 		
-		if(originalName.equals("null")) {
+		int tractor_id = Integer.parseInt(req.getParameter("tractor_id"));
+		
+		if(tractor_id == -1) {
 			if(MyDataBase.AddTractor(name, description, 1, Integer.parseInt(price))) {
 				req.setAttribute("entrace_alert", "成功添加农机");
 			} else {
 				req.setAttribute("entrace_alert", "添加农机失败");
 			}
 		} else {
-			Tractor tractor = MyDataBase.FindTractor(originalName);
+			Tractor tractor = MyDataBase.GetTractor(tractor_id);
 			boolean result = false;
 			if(tractor != null) {
 				result = MyDataBase.ModifyTractor(tractor.getId(), name, description, 2, Integer.parseInt(price));

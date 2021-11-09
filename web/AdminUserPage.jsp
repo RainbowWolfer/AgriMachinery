@@ -17,7 +17,7 @@
 	User check_user = (User) request.getAttribute("check_user");
 
 	PageType type = PageType.Normal;
-	if (check_user != null) {
+	if(check_user != null) {
 		type = PageType.CheckUser;
 	}
 %>
@@ -50,7 +50,7 @@
 				</td>
 			</tr>
 			<%
-				if (type == PageType.Normal) {
+				if(type == PageType.Normal) {
 			%>
 			<tr>
 				<td>
@@ -67,7 +67,7 @@
 				</td>
 			</tr>
 			<%
-			} else if (type == PageType.CheckUser) {
+			} else if(type == PageType.CheckUser) {
 			%>
 			<tr>
 				<td>
@@ -102,14 +102,14 @@
 </div>
 <div class="right">
 	<%
-		if (type == PageType.Normal) {
+		if(type == PageType.Normal) {
 	%>
 	<div class="usersDIV" id="_usersdiv">
 		<%
-			List<User> list_users = MyDataBase.GetAllUsers();
+			User[] list_users = MyDataBase.GetAllUsers();
 		%>
 		<p class="righttitle">
-			总共个数： <%=list_users.size()%>
+			总共个数： <%=list_users.length%>
 		</p>
 		<form class="addButtonForm" action="addnew" method="get">
 			<input class="addButton" type="submit" value="添加新用户"/>
@@ -125,7 +125,7 @@
 					<th class="table_content" style="width:10%;">操作</th>
 				</tr>
 				<%
-					for (User u : list_users) {
+					for(User u : list_users) {
 				%>
 				<tr>
 					<td class="table_content" style="width:20%;">
@@ -184,10 +184,10 @@
 	</div>
 	<div class="tractorsDIV" id="_tractorsdiv">
 		<%
-			List<Tractor> list_tractors = MyDataBase.GetAllTractors();
+			Tractor[] list_tractors = MyDataBase.GetAllTractors();
 		%>
 		<p class="righttitle">
-			总共个数： <%=list_tractors.size()%>
+			总共个数： <%=list_tractors.length%>
 		</p>
 		<form class="addButtonForm" action="addnew" method="post">
 			<input class="addButton" type="submit" value="添加新农机"/>
@@ -202,7 +202,7 @@
 					<th class="oprationtd">操作</th>
 				</tr>
 				<%
-					for (Tractor t : list_tractors) {
+					for(Tractor t : list_tractors) {
 				%>
 				<tr>
 					<td class="nametd">
@@ -238,7 +238,7 @@
 		</div>
 	</div>
 	<%
-	} else if (type == PageType.CheckUser) {
+	} else if(type == PageType.CheckUser) {
 	%>
 	<div style="overflow-y: scroll;height: 100%;">
 		<p style="text-align: center;font-size: xx-large; color: lightcyan;">
@@ -263,7 +263,7 @@
 				</th>
 			</tr>
 			<%
-				for (Tractor t : check_user.getOwned()) {
+				for(Tractor t : MyDataBase.FindUserOwned(check_user)) {
 			%>
 			<tr>
 				<td style="width:10%; text-align:center; font-size:large; color: lightcyan;">

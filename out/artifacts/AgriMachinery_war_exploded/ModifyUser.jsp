@@ -4,7 +4,6 @@
 <html>
 <%
 	User user = (User) request.getAttribute("modify_target");
-	int id = MyDataBase.GetUserID(user);
 %>
 <link rel="stylesheet" type="text/css" href="ModifyUser.css"/>
 <head>
@@ -22,7 +21,7 @@
 			<tr>
 				<th>编号：</th>
 				<td>
-					<%=id%>
+					<%=user == null ? "" : user.getId()%>
 				</td>
 			</tr>
 			<tr>
@@ -61,8 +60,8 @@
 				</td>
 			</tr>
 		</table>
-		<input name="originalName" type="hidden"
-		       value='<%=user != null ? user.getUsername() : null%>'/>
+		<input name="user_id" type="hidden"
+		       value='<%=user != null ? user.getId() : -1%>'/>
 		<input type="submit" value="确认"/>
 	</form>
 </div>

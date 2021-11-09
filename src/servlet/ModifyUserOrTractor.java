@@ -23,7 +23,7 @@ public class ModifyUserOrTractor extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		
 		int id = Integer.parseInt(req.getParameter("ObjectInput"));
-		User u = MyDataBase.FindUser(id);
+		User u = MyDataBase.GetUser(id);
 		if(u != null) {
 			req.setAttribute("modify_target", u);
 			req.getRequestDispatcher("ModifyUser.jsp").forward(req, resp);
@@ -43,7 +43,7 @@ public class ModifyUserOrTractor extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		
 		int id = Integer.parseInt(req.getParameter("ObjectInput"));
-		Tractor t = MyDataBase.FindTractor(id);
+		Tractor t = MyDataBase.GetTractor(id);
 		resp.getWriter().println(t == null);
 		resp.getWriter().println(id);
 		if(t != null) {

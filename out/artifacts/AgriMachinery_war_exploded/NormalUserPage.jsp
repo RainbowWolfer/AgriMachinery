@@ -255,7 +255,7 @@
 	<div class="tractorsDIV" id="_tractorsdiv">
 		<%
 			//			assert user != null;//what does it do?
-			List<Tractor> list_tractors = user.getOwned();
+			List<Tractor> list_tractors = MyDataBase.FindUserOwned(user);
 		%>
 		<p class="righttitle">
 			总共个数： <%=list_tractors.size()%>
@@ -270,7 +270,7 @@
 					<th class="oprationtd">操作</th>
 				</tr>
 				<%
-					for (Tractor t : list_tractors) {
+					for(Tractor t : list_tractors) {
 				%>
 				<tr>
 					<td class="nametd">

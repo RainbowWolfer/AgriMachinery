@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 public final class Methods {
@@ -55,4 +56,13 @@ public final class Methods {
 		}
 	}
 	
+	public static void PrintListList(List<List<String>> ll) {
+		System.out.println("Start");
+		for(List<String> line : ll) {
+			StringBuilder sb = new StringBuilder("\t");
+			line.forEach(sb::append);
+			System.out.println(sb.toString());
+		}
+		System.out.println("End");
+	}
 }

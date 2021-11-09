@@ -18,7 +18,8 @@
 </div>
 <div>
 	<%
-		List<List<String>> table = MyDataBase.Query("select * from tractors");
+		MyDataBase.NonQuery("INSERT INTO tractors(t_name, t_description, t_power, t_price) VALUES ('iukjhg','2354trgf',123,231.21);");
+		List<List<String>> table = MyDataBase.Query("select * from users");
 		if(table != null) {
 	%>
 	<table>

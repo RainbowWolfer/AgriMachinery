@@ -35,12 +35,5 @@
 		</div>
 	</form>
 </div>
-
-<div>
-	<%
-		//        String info = (String) request.getAttribute("info");
-//        out.println(info);
-	%>
-</div>
 </body>
 </html>

@@ -27,7 +27,6 @@ public class Tractor {
 				description = sql_line.get(2);
 				power = Integer.parseInt(sql_line.get(3));
 				price = Float.parseFloat(sql_line.get(4));
-				
 			}
 		} catch(Exception e) {
 			id = -1;

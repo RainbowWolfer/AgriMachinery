@@ -118,6 +118,7 @@ body {
     width: 20%;
     font-size: x-large;
     text-align: center;
+    padding: 15px;
 }
 
 .pricetd {
@@ -188,134 +189,10 @@ body {
     color: aqua;
 }
 
-/** {*/
-/*    padding: 0px;*/
-/*    margin: 0px;*/
-/*}*/
+.tablerow {
+    background-color: transparent;
+}
 
-/*!*table{*!*/
-/*!*    height: 100vh;*!*/
-/*!*    width: 100vw;*!*/
-/*!*    display: flex;*!*/
-/*!*    justify-content: center;*!*/
-/*!*    align-items: center;*!*/
-/*!*    flex-direction: column;*!*/
-/*!*}*!*/
-
-/*td, tr, td {*/
-/*    text-align: center;*/
-/*}*/
-
-/*.container {*/
-/*    position: fixed;*/
-/*    top: 0px;*/
-/*    z-index: 1;*/
-/*    width: 100%;*/
-/*    height: 100vh;*/
-/*    text-align: center;*/
-/*    display: flex;*/
-/*}*/
-
-/*.left {*/
-/*    width: 30%;*/
-/*    height: 100%;*/
-/*    background-color: slateblue;*/
-/*}*/
-
-/*.right {*/
-/*    flex-grow: 1;*/
-/*    background-color: darkslateblue;*/
-/*}*/
-
-/*.mytable {*/
-/*    width: 100%;*/
-/*    margin: 30px 0px 0px 0px;*/
-/*}*/
-
-/*.info {*/
-/*    color: lightcyan;*/
-/*    font-size: x-large;*/
-/*    text-align: center;*/
-/*}*/
-
-/*.menuitem {*/
-/*    text-decoration: none;*/
-/*    font-size: 24px;*/
-/*    color: lightcyan;*/
-/*    text-align: center;*/
-/*}*/
-
-/*#mainframe {*/
-/*    width: 100%;*/
-/*    height: 100vh;*/
-/*}*/
-
-/*#bottomrigths {*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    flex-direction: column;*/
-/*}*/
-
-/*#avatar {*/
-/*    border-radius: 50%;*/
-/*    width: 200px;*/
-/*    height: 200px;*/
-/*}*/
-
-/*iframe {*/
-/*    width: 100%;*/
-/*    height: 100vh;*/
-/*    background-color: darkslateblue;*/
-/*}*/
-
-/*.menuButton {*/
-/*    font-size: 18px;*/
-/*    background-color: transparent;*/
-/*    border-color: transparent;*/
-/*    color: lightcyan;*/
-/*}*/
-
-/*.btmtable {*/
-/*    text-align: -webkit-center;*/
-/*    margin: 0px 0px 20px 0px;*/
-/*}*/
-
-/*.btmtable tr td {*/
-/*    font-size: 18px;*/
-/*    color: lightcyan;*/
-/*    text-align: center;*/
-/*}*/
-
-/*.tractorstable {*/
-/*    text-align: -webkit-center;*/
-/*    table-layout: fixed;*/
-/*    padding: 50px;*/
-/*}*/
-
-/*.tractorstable th {*/
-/*    font-weight: bold;*/
-/*    font-size: 20px;*/
-/*    border: 1px;*/
-/*}*/
-
-/*.descriptiontd {*/
-/*    word-wrap: break-word;*/
-/*}*/
-
-/*.descriptiondiv {*/
-/*    width: 60vw;*/
-/*}*/
-
-/*.tractorstable * {*/
-/*    color: lightcyan;*/
-/*    margin: 5px;*/
-/*}*/
-
-/*.righttitle {*/
-/*    font-size: large;*/
-/*    color: lightcyan;*/
-/*}*/
-
+.tablerow:hover {
+    background-color: rebeccapurple;
+}

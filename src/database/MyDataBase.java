@@ -134,7 +134,30 @@ public class MyDataBase {
 	}
 	
 	public static boolean IsResultValid(List<List<String>> result) {
-		return result != null && result.size() != 0 && result.get(0).size() != 0;
+		return result != null && result.size() > 1 && result.get(0).size() != 0;
+	}
+	
+	public static List<String> FindByColumn(List<List<String>> result, String columnName) {
+		if(!IsResultValid((result))) {
+			return null;
+		}
+		List<String> list = new ArrayList<String>();
+		int index = -1;
+		List<String> title = result.get(0);
+		for(int i = 0; i < title.size(); i++) {
+			if(title.get(i).equals(columnName)) {
+				index = i;
+				break;
+			}
+		}
+		if(index != -1) {
+			for(List<String> line : result) {
+				list.add(line.get(index));
+			}
+			return list;
+		} else {
+			return null;
+		}
 	}
 	
 	public static Tractor GetTractor(int id) {
@@ -148,7 +171,7 @@ public class MyDataBase {
 			return false;
 		}
 		// String message = result.get(1).get(0);
-		Methods.PrintListList(result);
+//		Methods.PrintListList(result);
 		return result.get(0).get(0).toLowerCase().equals("true");
 	}
 	
@@ -166,11 +189,15 @@ public class MyDataBase {
 	}
 	
 	public static boolean RemoveUser(User user) {
-		return NonQuery("delete from users where u_id = " + user.getId() + ";");
+		List<List<String>> result = Query(String.format("CALL DeleteUser(%s);", user.getId()));
+		if(!IsResultValid(result)) {
+			return false;
+		}
+		return result.get(0).get(0).toLowerCase().equals("true");
 	}
 	
 	public static boolean AddUser(String username, String password, String phone, String place, boolean isAdmin) {
-		return NonQuery(String.format("insert into users(u_username, u_password, u_phone, u_place, u_isAdmin) values ('%s','%s','%s','%s','%s')", username, password, phone, place, isAdmin));
+		return NonQuery(String.format("insert into users(u_username, u_password, u_phone, u_place, u_isAdmin) values ('%s','%s','%s','%s','%s')", username, password, phone, place, isAdmin ? "1" : "0"));
 	}
 	
 	public static boolean ModifyUser(int oldID, String new_username, String new_password, String new_phone, String new_place, boolean new_isAdmin) {
@@ -188,6 +215,18 @@ public class MyDataBase {
 		}
 		result.subList(1, result.size()).forEach(t -> tractors.add(new Tractor(t)));
 		return tractors;
+	}
+	
+	public static User CheckUser(String username, String password) {
+		List<List<String>> result = Query(String.format("SELECT * FROM users WHERE u_username = '%s';", username));
+		if(!IsResultValid(result)) {
+			return null;
+		}
+		List<String> list = FindByColumn(result, "u_password");
+		if(list == null || !password.equals(list.get(1))) {
+			return null;
+		}
+		return new User(result.get(1));
 	}
 	
 }

@@ -25,8 +25,12 @@ public class DeleteUserOrTractor extends HttpServlet {
 		int id = Integer.parseInt(req.getParameter("ObjectInput"));
 		User u = MyDataBase.GetUser(id);
 		if(u != null) {
-			MyDataBase.RemoveUser(u);
-			req.setAttribute("entrace_alert", "成功删除用户");
+			boolean result = MyDataBase.RemoveUser(u);
+			if(result) {
+				req.setAttribute("entrace_alert", "成功删除用户");
+			} else {
+				req.setAttribute("entrace_alert", "删除用户失败");
+			}
 		} else {
 			req.setAttribute("entrace_alert", "删除用户失败");
 		}
@@ -47,12 +51,12 @@ public class DeleteUserOrTractor extends HttpServlet {
 		if(t != null) {
 			boolean result = MyDataBase.RemoveTractor(t);
 			if(result) {
-				req.setAttribute("entrace_alert", "成功删除农机" + id + "//" + t.getId());
+				req.setAttribute("entrace_alert", "成功删除农机");
 			} else {
-				req.setAttribute("entrace_alert", "删除农机失败1 " + id + "//" + t.getId());
+				req.setAttribute("entrace_alert", "删除农机失败");
 			}
 		} else {
-			req.setAttribute("entrace_alert", "删除农机失败2 " + id + "//" + t.getId());
+			req.setAttribute("entrace_alert", "删除农机失败");
 		}
 //		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 		Methods.ForwardToBase(req, resp);

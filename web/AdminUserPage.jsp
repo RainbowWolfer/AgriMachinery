@@ -124,7 +124,7 @@
 				<%
 					for(User u : list_users) {
 				%>
-				<tr>
+				<tr class="tablerow">
 					<td class="table_content" style="width:20%;">
 						<p>
 							<%=u.getUsername()%>
@@ -201,7 +201,7 @@
 				<%
 					for(Tractor t : list_tractors) {
 				%>
-				<tr>
+				<tr class="tablerow">
 					<td class="nametd">
 						<%=t.getName()%>
 					</td>

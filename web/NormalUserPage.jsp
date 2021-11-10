@@ -121,6 +121,7 @@
 		width: 20%;
 		font-size: x-large;
 		text-align: center;
+		padding: 15px;
 	}
 
 	.pricetd {
@@ -190,15 +191,20 @@
 		color: aqua;
 	}
 
+	.tablerow {
+		background-color: transparent;
+	}
+
+	.tablerow:hover {
+		background-color: rebeccapurple;
+	}
+
 </style>
 <%
 	User user = (User) request.getSession().getAttribute("user");
 
 	String entrace_alert = (String) request.getAttribute("entrace_alert");
 	entrace_alert = entrace_alert == null ? "" : entrace_alert;
-
-	//prevent refreshing show the same message (but it does not seem to work correctly)
-	request.setAttribute("entrace_alert", "");
 %>
 
 <head>
@@ -265,14 +271,14 @@
 				<tr>
 					<th class="nametd">名称</th>
 					<th class="descriptiondtd">描述</th>
-					<th class="powertd">马力</th>
 					<th class="pricetd">价格</th>
+					<th class="powertd">马力</th>
 					<th class="oprationtd">操作</th>
 				</tr>
 				<%
 					for(Tractor t : list_tractors) {
 				%>
-				<tr>
+				<tr class="tablerow">
 					<td class="nametd">
 						<%=t.getName()%>
 					</td>

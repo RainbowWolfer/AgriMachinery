@@ -11,9 +11,6 @@
 	String entrace_alert = (String) request.getAttribute("entrace_alert");
 	entrace_alert = entrace_alert == null ? "" : entrace_alert;
 
-	//prevent refreshing show the same message (but it does not seem to work correctly)
-	request.setAttribute("entrace_alert", "");
-
 	User check_user = (User) request.getAttribute("check_user");
 
 	PageType type = PageType.Normal;

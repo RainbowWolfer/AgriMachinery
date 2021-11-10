@@ -17,13 +17,15 @@ CREATE TABLE IF NOT EXISTS users(
 	u_isAdmin BOOL DEFAULT FALSE
 );
 
+DROP TABLE IF EXISTS user_owned;
+
 CREATE TABLE IF NOT EXISTS user_owned(
 	o_id INT PRIMARY KEY AUTO_INCREMENT,
 	o_user_id INT NOT NULL,
 	o_tractor_id INT NOT NULL,
 	CONSTRAINT fk_r_user FOREIGN KEY(o_user_id) REFERENCES users(u_id),
 	CONSTRAINT fk_r_tractor FOREIGN KEY(o_tractor_id) REFERENCES tractors(t_id),
-	UNIQUE KEY uk_r_owned(o_user_id, o_tractor_id)
+	UNIQUE KEY uk_r_owned(o_tractor_id)
 );
 
 INSERT INTO
@@ -43,55 +45,10 @@ INSERT INTO
 	)
 VALUES
 	(
-		wolfer ',
+		'rainbowwolfer ',
 		' 123456 ',
-		' rainbow '18919626820',
+		'18919626820',
 		'SA',
 		TRUE
 	);
-
---Test
-SELECT
-	*
-FROM
-	tractors
-WHERE
-	t_id = '';
-
-INSERT INTO
-	tractors(t_name, t_description, t_power, t_price)
-VALUES
-	('iukjhg', '2354trgf', 123, 231.21);
-
-DELETE FROM
-	tractors
-WHERE
-	t_name = 'iukjhg';
-
-UPDATE
-	tractors
-SET
-	t_name = '?',
-	t_description = '?',
-	t_power = '?',
-	t_price = '?'
-WHERE
-	id = '?';
-
-SELECT
-	*
-FROM
-	tractors;
-
-SELECT
-	t_id,
-	t_name,
-	t_description,
-	t_power,
-	t_price
-FROM
-	user_owned,
-	tractors
-WHERE
-	o_tractor_id = t_id
-	AND o_user_id = 1;
+	

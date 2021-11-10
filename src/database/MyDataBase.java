@@ -72,6 +72,7 @@ public class MyDataBase {
 			return result;
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
+			System.err.println(sql);
 			return null;
 		} finally {
 			Close(connection, statement, resultSet);
@@ -88,6 +89,7 @@ public class MyDataBase {
 			return true;
 		} catch(SQLException throwables) {
 			throwables.printStackTrace();
+			System.err.println(sql);
 			return false;
 		} finally {
 			Close(connection, statement, null);
@@ -117,7 +119,7 @@ public class MyDataBase {
 		if(!IsResultValid((result))) {
 			return new User[]{};
 		}
-		Methods.PrintListList(result);
+//		Methods.PrintListList(result);
 		for(List<String> line : result.subList(1, result.size())) {
 			users.add(new User(
 					Integer.parseInt(line.get(0)),

@@ -8,9 +8,6 @@
 <link type="text/css" href="AdminUserPage.css" rel="stylesheet">
 <%
 	User user = (User) request.getSession().getAttribute("user");
-	String entrace_alert = (String) request.getAttribute("entrace_alert");
-	entrace_alert = entrace_alert == null ? "" : entrace_alert;
-
 	User check_user = (User) request.getAttribute("check_user");
 
 	PageType type = PageType.Normal;
@@ -21,8 +18,10 @@
 <head>
 	<title>Admin</title>
 	<script>
-        if ('<%=entrace_alert%>'.length !== 0) {
-            alert('<%=entrace_alert%>');
+        let entrace_alert = '<%=session.getAttribute("entrace_alert")%>';
+        if (entrace_alert !== 'null') {
+            alert(entrace_alert);
+            sessionStorage.removeItem("entrace_alert");//not working
         }
 	</script>
 </head>

@@ -28,7 +28,7 @@ public class ModifyUserOrTractor extends HttpServlet {
 			req.setAttribute("modify_target", u);
 			req.getRequestDispatcher("ModifyUser.jsp").forward(req, resp);
 		} else {
-			req.setAttribute("entrace_alert", "找不到用户");
+			req.getSession().setAttribute("entrace_alert", "找不到用户");
 //			req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 			Methods.ForwardToBase(req, resp);
 		}
@@ -50,7 +50,7 @@ public class ModifyUserOrTractor extends HttpServlet {
 			req.setAttribute("modify_target", t);
 			req.getRequestDispatcher("ModifyTractor.jsp").forward(req, resp);
 		} else {
-			req.setAttribute("entrace_alert", "找不到农机");
+			req.getSession().setAttribute("entrace_alert", "找不到农机");
 //			req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 			Methods.ForwardToBase(req, resp);
 		}

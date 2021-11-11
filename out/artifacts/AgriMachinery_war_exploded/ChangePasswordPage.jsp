@@ -18,7 +18,7 @@
 <h2>当前用户：
 	<%
 		User u = (User) request.getSession().getAttribute("user");
-		if (u != null) {
+		if(u != null) {
 			out.print(u.getUsername());
 		}
 	%>
@@ -29,21 +29,24 @@
 			<tr>
 				<th>原来密码：</th>
 				<td>
-					<input name="originalInput" id="originalInput" type="text"/>
+					<input name="originalInput" id="originalInput" type="text"
+					       oninput="OnChanged(this,'line1')"/>
 				</td>
 				<td id="line1">*</td>
 			</tr>
 			<tr>
 				<th>新密码：</th>
 				<td>
-					<input name="newInput" id="newInput" type="text"/>
+					<input name="newInput" id="newInput" type="text"
+					       oninput="OnChanged(this,'line2')"/>
 				</td>
 				<td id="line2">*</td>
 			</tr>
 			<tr>
 				<th>确认密码：</th>
 				<td>
-					<input name="confirmInput" id="confirmInput" type="text" onchange="alert('?')"/>
+					<input name="confirmInput" id="confirmInput" type="text"
+					       oninput="OnChanged(this,'line3')"/>
 				</td>
 				<td id="line3">*</td>
 			</tr>
@@ -64,6 +67,13 @@
         }
         return true;
     }
+
+    function OnChanged(_self, targetID) {
+        let target = document.getElementById(targetID);
+        let changed = _self.value;
+        target.style.color = changed.length === 0 ? "red" : "white";
+    }
+
 </script>
 </body>
 </html>

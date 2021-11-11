@@ -32,9 +32,9 @@ public class SubmitModify extends HttpServlet {
 		
 		if(user_id == -1) {
 			if(MyDataBase.AddUser(username, password, phone, place, isadmin != null)) {
-				req.setAttribute("entrace_alert", "成功添加用户");
+				req.getSession().setAttribute("entrace_alert", "成功添加用户");
 			} else {
-				req.setAttribute("entrace_alert", "添加用户失败");
+				req.getSession().setAttribute("entrace_alert", "添加用户失败");
 			}
 		} else {
 			User user = MyDataBase.GetUser(user_id);
@@ -43,9 +43,9 @@ public class SubmitModify extends HttpServlet {
 				result = MyDataBase.ModifyUser(user.getId(), username, password, phone, place, isadmin != null);
 			}
 			if(result) {
-				req.setAttribute("entrace_alert", "成功修改用户");
+				req.getSession().setAttribute("entrace_alert", "成功修改用户");
 			} else {
-				req.setAttribute("entrace_alert", "修改用户失败");
+				req.getSession().setAttribute("entrace_alert", "修改用户失败");
 			}
 		}
 //		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
@@ -69,9 +69,9 @@ public class SubmitModify extends HttpServlet {
 		
 		if(tractor_id == -1) {
 			if(MyDataBase.AddTractor(name, description, Integer.parseInt(power), Float.parseFloat(price))) {
-				req.setAttribute("entrace_alert", "成功添加农机");
+				req.getSession().setAttribute("entrace_alert", "成功添加农机");
 			} else {
-				req.setAttribute("entrace_alert", "添加农机失败");
+				req.getSession().setAttribute("entrace_alert", "添加农机失败");
 			}
 		} else {
 			Tractor tractor = MyDataBase.GetTractor(tractor_id);
@@ -79,7 +79,7 @@ public class SubmitModify extends HttpServlet {
 			if(tractor != null) {
 				result = MyDataBase.ModifyTractor(tractor.getId(), name, description, Integer.parseInt(power), Float.parseFloat(price));
 			}
-			req.setAttribute("entrace_alert", result ? "成功修改农机" : "修改农机失败");
+			req.getSession().setAttribute("entrace_alert", result ? "成功修改农机" : "修改农机失败");
 		}
 //		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 		Methods.ForwardToBase(req, resp);

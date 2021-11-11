@@ -27,14 +27,13 @@ public class DeleteUserOrTractor extends HttpServlet {
 		if(u != null) {
 			boolean result = MyDataBase.RemoveUser(u);
 			if(result) {
-				req.setAttribute("entrace_alert", "成功删除用户");
+				req.getSession().setAttribute("entrace_alert", "成功删除用户");
 			} else {
-				req.setAttribute("entrace_alert", "删除用户失败");
+				req.getSession().setAttribute("entrace_alert", "删除用户失败");
 			}
 		} else {
-			req.setAttribute("entrace_alert", "删除用户失败");
+			req.getSession().setAttribute("entrace_alert", "删除用户失败");
 		}
-//		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 		Methods.ForwardToBase(req, resp);
 	}
 	
@@ -51,14 +50,13 @@ public class DeleteUserOrTractor extends HttpServlet {
 		if(t != null) {
 			boolean result = MyDataBase.RemoveTractor(t);
 			if(result) {
-				req.setAttribute("entrace_alert", "成功删除农机");
+				req.getSession().setAttribute("entrace_alert", "成功删除农机");
 			} else {
-				req.setAttribute("entrace_alert", "删除农机失败");
+				req.getSession().setAttribute("entrace_alert", "删除农机失败");
 			}
 		} else {
-			req.setAttribute("entrace_alert", "删除农机失败");
+			req.getSession().setAttribute("entrace_alert", "删除农机失败");
 		}
-//		req.getRequestDispatcher("AdminUserPage.jsp").forward(req, resp);
 		Methods.ForwardToBase(req, resp);
 	}
 }

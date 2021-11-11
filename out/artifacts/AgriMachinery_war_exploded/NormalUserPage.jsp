@@ -202,17 +202,16 @@
 </style>
 <%
 	User user = (User) request.getSession().getAttribute("user");
-
-	String entrace_alert = (String) request.getAttribute("entrace_alert");
-	entrace_alert = entrace_alert == null ? "" : entrace_alert;
 %>
 
 <head>
 	<meta charset="UTF-8">
 	<title>User</title>
 	<script>
-        if ('<%=entrace_alert%>'.length !== 0) {
-            alert('<%=entrace_alert%>');
+        let entrace_alert = '<%=session.getAttribute("entrace_alert")%>';
+        if (entrace_alert !== 'null') {
+            alert(entrace_alert);
+            sessionStorage.setItem("entrace_alert", "");
         }
 	</script>
 </head>

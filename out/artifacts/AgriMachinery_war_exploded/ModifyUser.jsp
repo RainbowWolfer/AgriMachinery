@@ -22,36 +22,45 @@
 			<tr>
 				<th>编号：</th>
 				<td>
-					<%=user == null ? "" : user.getId()%>
+					<%=user == null ? MyDataBase.GetUserNextID() : user.getId()%>
 				</td>
+				<td></td>
 			</tr>
 			<tr>
 				<th>用户名：</th>
 				<td>
 					<input name="usernameInput" id="usernameInput" type="text"
-					       value='<%=user == null ? "" : user.getUsername()%>'/>
+					       value='<%=user == null ? "" : user.getUsername()%>'
+					       oninput="OnChanged(this,'line1')"/>
 				</td>
+				<td id="line1">*</td>
 			</tr>
 			<tr>
 				<th>密码：</th>
 				<td>
 					<input name="passwordInput" id="passwordInput" type="text"
-					       value='<%=user == null ? "" : user.getPassword()%>'/>
+					       value='<%=user == null ? "" : user.getPassword()%>'
+					       oninput="OnChanged(this,'line2')"/>
 				</td>
+				<td id="line2">*</td>
 			</tr>
 			<tr>
 				<th>电话：</th>
 				<td>
 					<input name="phoneInput" id="phoneInput" type="text"
-					       value='<%=user == null ? "" : user.getPhone()%>'/>
+					       value='<%=user == null ? "" : user.getPhone()%>'
+					       oninput="OnChanged(this,'line3')"/>
 				</td>
+				<td id="line3">*</td>
 			</tr>
 			<tr>
 				<th>地址：</th>
 				<td>
 					<input name="placeInput" id="placeInput" type="text"
-					       value='<%=user == null ? "" : user.getPlace()%>'/>
+					       value='<%=user == null ? "" : user.getPlace()%>'
+					       oninput="OnChanged(this,'line4')"/>
 				</td>
+				<td id="line4">*</td>
 			</tr>
 			<tr>
 				<th>管理员：</th>
@@ -59,6 +68,7 @@
 					<input name="adminInput" id="adminInput"
 					       type="checkbox" <%=user != null && user.isAdmin() ? "checked" : ""%>/>
 				</td>
+				<td></td>
 			</tr>
 		</table>
 		<input name="user_id" type="hidden"
@@ -74,11 +84,17 @@
         let place_input = document.getElementById("usernameInput").value;
 
         if (username_input.length === 0 || password_input.length === 0 || phone_input.length === 0 || place_input.length === 0) {
-            document.getElementById("hint").textContent = "";
+            document.getElementById("hint").textContent = "请输入必要项";
             return false;
         }
 
         return confirm('确认提交');
+    }
+
+    function OnChanged(_self, targetID) {
+        let target = document.getElementById(targetID);
+        let changed = _self.value;
+        target.style.color = changed.length === 0 ? "red" : "white";
     }
 </script>
 </body>

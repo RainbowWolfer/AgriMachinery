@@ -21,7 +21,7 @@ public class MyDataBase {
 	static {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch(ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
@@ -32,16 +32,16 @@ public class MyDataBase {
 	
 	public static void Close(Connection connection, Statement statement, ResultSet resultSet) {
 		try {
-			if(connection != null) {
+			if (connection != null) {
 				connection.close();
 			}
-			if(statement != null) {
+			if (statement != null) {
 				statement.close();
 			}
-			if(resultSet != null) {
+			if (resultSet != null) {
 				resultSet.close();
 			}
-		} catch(SQLException throwables) {
+		} catch (SQLException throwables) {
 			throwables.printStackTrace();
 		}
 	}
@@ -58,19 +58,19 @@ public class MyDataBase {
 			ResultSetMetaData meta = resultSet.getMetaData();
 			List<String> head = new ArrayList<String>();
 			int columnCount = meta.getColumnCount();
-			for(int i = 1; i <= columnCount; i++) {
+			for (int i = 1; i <= columnCount; i++) {
 				head.add(meta.getColumnLabel(i));
 			}
 			result.add(head);
-			while(resultSet.next()) {
+			while (resultSet.next()) {
 				List<String> line = new ArrayList<String>();
-				for(int i = 1; i <= columnCount; i++) {
+				for (int i = 1; i <= columnCount; i++) {
 					line.add(resultSet.getString(i));
 				}
 				result.add(line);
 			}
 			return result;
-		} catch(SQLException throwables) {
+		} catch (SQLException throwables) {
 			throwables.printStackTrace();
 			System.err.println(sql);
 			return null;
@@ -87,7 +87,7 @@ public class MyDataBase {
 			statement = connection.createStatement();
 			statement.execute(sql);
 			return true;
-		} catch(SQLException throwables) {
+		} catch (SQLException throwables) {
 			throwables.printStackTrace();
 			System.err.println(sql);
 			return false;
@@ -99,16 +99,11 @@ public class MyDataBase {
 	public static Tractor[] GetAllTractors() {
 		List<Tractor> tractors = new ArrayList<Tractor>();
 		List<List<String>> result = Query("select * from tractors");
-		if(result == null) {
+		if (result == null) {
 			return new Tractor[]{};
 		}
-		for(List<String> line : result.subList(1, result.size())) {
-			tractors.add(new Tractor(
-					Integer.parseInt(line.get(0)),
-					line.get(1),
-					line.get(2),
-					Integer.parseInt(line.get(3)),
-					Float.parseFloat(line.get(4))));
+		for (List<String> line : result.subList(1, result.size())) {
+			tractors.add(new Tractor(line));
 		}
 		return tractors.toArray(Tractor[]::new);
 	}
@@ -116,19 +111,12 @@ public class MyDataBase {
 	public static User[] GetAllUsers() {
 		List<User> users = new ArrayList<User>();
 		List<List<String>> result = Query("select * from users");
-		if(!IsResultValid((result))) {
+		if (!IsResultValid((result))) {
 			return new User[]{};
 		}
 //		Methods.PrintListList(result);
-		for(List<String> line : result.subList(1, result.size())) {
-			users.add(new User(
-					Integer.parseInt(line.get(0)),
-					line.get(1),
-					line.get(2),
-					line.get(3),
-					line.get(4),
-					line.get(5).equals("true")
-			));
+		for (List<String> line : result.subList(1, result.size())) {
+			users.add(new User(line));
 		}
 		return users.toArray(User[]::new);
 	}
@@ -138,20 +126,20 @@ public class MyDataBase {
 	}
 	
 	public static List<String> FindByColumn(List<List<String>> result, String columnName) {
-		if(!IsResultValid((result))) {
+		if (!IsResultValid((result))) {
 			return null;
 		}
 		List<String> list = new ArrayList<String>();
 		int index = -1;
 		List<String> title = result.get(0);
-		for(int i = 0; i < title.size(); i++) {
-			if(title.get(i).equals(columnName)) {
+		for (int i = 0; i < title.size(); i++) {
+			if (title.get(i).equals(columnName)) {
 				index = i;
 				break;
 			}
 		}
-		if(index != -1) {
-			for(List<String> line : result) {
+		if (index != -1) {
+			for (List<String> line : result) {
 				list.add(line.get(index));
 			}
 			return list;
@@ -167,7 +155,7 @@ public class MyDataBase {
 	
 	public static boolean RemoveTractor(Tractor tractor) {
 		List<List<String>> result = Query(String.format("CALL DeleteTractor(%s);", tractor.getId()));
-		if(!IsResultValid(result)) {
+		if (!IsResultValid(result)) {
 			return false;
 		}
 		// String message = result.get(1).get(0);
@@ -190,7 +178,7 @@ public class MyDataBase {
 	
 	public static boolean RemoveUser(User user) {
 		List<List<String>> result = Query(String.format("CALL DeleteUser(%s);", user.getId()));
-		if(!IsResultValid(result)) {
+		if (!IsResultValid(result)) {
 			return false;
 		}
 		return result.get(0).get(0).toLowerCase().equals("true");
@@ -206,11 +194,11 @@ public class MyDataBase {
 	
 	public static List<Tractor> FindUserOwned(User user) {
 		List<Tractor> tractors = new ArrayList<Tractor>();
-		if(user == null) {
+		if (user == null) {
 			return tractors;
 		}
 		List<List<String>> result = Query("SELECT t_id, t_name, t_description, t_power, t_price FROM user_owned, tractors WHERE o_tractor_id = t_id AND o_user_id = " + user.getId() + ";");
-		if(!IsResultValid(result)) {
+		if (!IsResultValid(result)) {
 			return tractors;
 		}
 		result.subList(1, result.size()).forEach(t -> tractors.add(new Tractor(t)));
@@ -219,14 +207,18 @@ public class MyDataBase {
 	
 	public static User CheckUser(String username, String password) {
 		List<List<String>> result = Query(String.format("SELECT * FROM users WHERE u_username = '%s';", username));
-		if(!IsResultValid(result)) {
+		if (!IsResultValid(result)) {
 			return null;
 		}
 		List<String> list = FindByColumn(result, "u_password");
-		if(list == null || !password.equals(list.get(1))) {
+		if (list == null || !password.equals(list.get(1))) {
 			return null;
 		}
 		return new User(result.get(1));
+	}
+	
+	public static boolean ChangePassword(int id, String password) {
+		return NonQuery(String.format("update users set u_password = '%s' where u_id = '%s'", password, id));
 	}
 	
 }

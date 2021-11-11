@@ -1,5 +1,6 @@
 package servlet;
 
+import database.MyDataBase;
 import model.User;
 
 import javax.servlet.ServletException;
@@ -42,11 +43,16 @@ public class ChangePassword extends HttpServlet {
 				req.setAttribute("hint", "确认密码输入错误");
 				req.getRequestDispatcher("ChangePasswordPage.jsp").forward(req, resp);
 			} else {
-				req.setAttribute("display", "密码修改成功");
-				req.setAttribute("buttonContent", "返回");
-				req.setAttribute("form_action", "submitnewpassword");
-				req.setAttribute("form_methods", "get");
-				req.getRequestDispatcher("SimpleDisplayPage.jsp").forward(req, resp);
+				if (MyDataBase.ChangePassword(user.getId(), confirmInput)) {
+					req.setAttribute("display", "密码修改成功");
+					req.setAttribute("buttonContent", "返回");
+					req.setAttribute("form_action", "submitnewpassword");
+					req.setAttribute("form_methods", "get");
+					req.getRequestDispatcher("SimpleDisplayPage.jsp").forward(req, resp);
+				} else {
+					req.setAttribute("hint", "数据库错误");
+					req.getRequestDispatcher("ChangePasswordPage.jsp").forward(req, resp);
+				}
 			}
 		}
 	}

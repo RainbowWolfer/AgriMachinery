@@ -22,11 +22,11 @@ public class User {
 	}
 	
 	public User(List<String> sql_line) {
-		for (String data : sql_line) {
-			System.out.println(data);
-		}
+//		for (String data : sql_line) {
+//			System.out.println(data);
+//		}
 		try {
-			if(sql_line.size() != 6) {
+			if (sql_line.size() != 6) {
 				throw new Exception("SQL String to User Error with Length of " + sql_line.size());
 			} else {
 				id = Integer.parseInt(sql_line.get(0));
@@ -36,7 +36,7 @@ public class User {
 				place = sql_line.get(4);
 				isAdmin = sql_line.get(5).toLowerCase().equals("1");
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			id = -1;
 			username = "ERROR";
 			password = "ERROR";
@@ -47,13 +47,8 @@ public class User {
 		}
 	}
 	
-	public static User Check(String username, String password) {
-//		if (username.equals("1234") && password.equals("1234")) {
-//			return new User(1, username, password, "18919626820", "SA", true);
-//		} else if (username.equals("123") && password.equals("123")) {
-//			return new User(2, username, password, "12345367890", "LA", false);
-//		}
-		return MyDataBase.CheckUser(username, password);
+	public static boolean CheckUsernameValid(){
+		return false;
 	}
 	
 	public boolean isAdmin() {

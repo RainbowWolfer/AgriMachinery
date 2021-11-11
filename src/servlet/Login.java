@@ -1,5 +1,6 @@
 package servlet;
 
+import database.MyDataBase;
 import model.User;
 
 import javax.servlet.ServletException;
@@ -34,7 +35,7 @@ public class Login extends HttpServlet {
 				}
 			}
 			if(!username.equals("") && !password.equals("")) {
-				found = User.Check(username, password);
+				found = MyDataBase.CheckUser(username, password);
 			}
 		}
 		info = String.valueOf(cookies == null);
@@ -61,7 +62,7 @@ public class Login extends HttpServlet {
 		String username = req.getParameter("UsernameInput");
 		String password = req.getParameter("PasswordInput");
 		
-		var user = User.Check(username, password);
+		var user = MyDataBase.CheckUser(username, password);
 		if(user != null) {
 			var c_u = new Cookie("LastLogin_Username", username);
 			var c_p = new Cookie("LastLogin_Password", password);
